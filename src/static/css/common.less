@@ -1,0 +1,52 @@
+@charset "utf-8";
+/* CSS Document */
+h1,h2,h3,h4,h5,h6,strong,p,ul,input,i,b,em,li,ol,dl,dd{font:16px "宋体";margin:0;padding:0;list-style:none;}
+/*strong{font-weight:normal;}*/
+/*p{margin:0;}*/
+a{color:#000;text-decoration:none;}
+/*ul{margin:0;padding:0; list-style:none;}*/
+img{border:none; display:block; /*vertical-align:top;*/}
+.clearfix:after{ content:""; display:block; clear:both;}
+.clearfix{zoom:1;} /*用来兼容IE6*/
+.fl{ float:left;}
+.fr{ float:right;}
+input::-ms-clear{ display:none;}
+input::-ms-reveal{ display:none;}
+html,#root{
+  height: 100%;
+}
+body{
+  margin: 0;
+  height: 100%;
+  background-color: #f2f2f2!important;
+}
+.loadingMask{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left: 0;
+  z-index: 99999999999;
+  img{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    left: 50%;
+    top: 50%;
+    margin-left: -25px;
+    margin-top: -25px;
+  }
+}
+.pagination-wrapper{
+  margin-top: 20px;
+  text-align: center;
+  .ant-pagination{
+    display: inline-block!important;
+  }
+}
+.common-title{
+  margin-bottom: 20px;
+  font-size:21px;
+  border-bottom: 1px solid #ddd;
+  line-height:40px;
+}
