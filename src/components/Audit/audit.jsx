@@ -6,6 +6,9 @@ import '../../static/css/commonList.less'
 import {getCookie} from  '../../util/cookie';
 import {api} from '../../util/common';
 import { postData } from '../../fetch/postData';
+import {getLocalTime} from '../../util/common';
+import { hashHistory } from 'react-router';
+
 
 import './audit.less'
 class Audit extends React.Component {
@@ -34,11 +37,11 @@ class Audit extends React.Component {
                     {
                         this.state.applicationList.map((item,index)=>
                             <dd key={index}>
-                                <div className="new-left">1</div>
-                                <div className="new-mid">545645</div>
-                                <div className="new-right">2017-06-28</div>
-                                <div className="proposer">郑益明</div>
-                                <div className="status">待审核</div>
+                                <div className="new-left">{item.id}</div>
+                                <div className="new-mid" onClick={this.handeClick.bind(this,item.applicationCode)}>{item.projectName}</div>
+                                <div className="new-right">{getLocalTime(item.createTime)}</div>
+                                <div className="proposer">{item.supplyName}</div>
+                                <div className="status">{item.status==0?'待审核':'已审核'}</div>
                             </dd>
                         )
                     }
@@ -54,7 +57,10 @@ class Audit extends React.Component {
             </div>
         )
     }
-    handleChange(){
+    handeClick(id){
+      hashHistory.push('/application/'+id);
+    }
+    handleChange(page){
         this.setState({
             currentPage:page-1
         },()=>{
@@ -75,9 +81,9 @@ class Audit extends React.Component {
             pageSize:pageSize
         };
         postData(api+'/dhy/application/list',data,(result)=>{
-            //let themes=result.themes;
+            let applications=result.applications;
             this.setState({
-                applicationList:[],
+                applicationList:applications,
                 total:result.total
             });
             console.log(result)

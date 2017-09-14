@@ -2,7 +2,9 @@ import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import {getCookie} from  '../../util/cookie';
 import { hashHistory } from 'react-router';
-import { Form, Input, Tooltip, Upload,Button,Icon,Radio ,DatePicker,Col } from 'antd';
+import { Form, Input, Tooltip, Upload,Button,Icon,Radio ,DatePicker,Modal } from 'antd';
+import {api} from '../../util/common';
+import { postData } from '../../fetch/postData';
 import './form.less';
 const { TextArea } = Input;
 const FormItem = Form.Item;
@@ -44,7 +46,7 @@ class UseForm extends React.Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <div className="form">
-                <div className="common-title">title</div>
+                <div className="common-title">宁波大红鹰学院非学历教育培训申请表</div>
                 <Form onSubmit={this.handleSubmit.bind(this)}>
                     <FormItem
                         {...formItemLayout}
@@ -243,12 +245,20 @@ class UseForm extends React.Component {
                         )}
                         hasFeedback
                     >
-                        {getFieldDecorator('unit')(
+                      <FormItem style={{width:'40%',display:'inline-block'}}>
+                        {getFieldDecorator('classunitPercentage')(
                             <div>
-                                <Input placeholder="培训费比例" name="classunitPercentage" type="number" style={{width:'40%',display:'inline-block'}}/>%,计
-                                <Input placeholder="培训费分配" name="classunitmoney" type="number" style={{width:'40%',display:'inline-block'}}/>人
+                                <Input placeholder="培训费比例" name="classunitPercentage" type="number" style={{width:'80%'}}/>%,计
                             </div>
                         )}
+                      </FormItem>
+                      <FormItem style={{width:'40%',display:'inline-block'}}>
+                        {getFieldDecorator('classunitmoney')(
+                          <div>
+                            <Input placeholder="培训费分配" name="classunitmoney" type="number" style={{width:'80%'}}/>人
+                          </div>
+                        )}
+                      </FormItem>
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
@@ -259,13 +269,22 @@ class UseForm extends React.Component {
                         )}
                         hasFeedback
                     >
-                        {getFieldDecorator('partnerBox')(
-                            <div>
-                                <Input placeholder="培训费比例" name="partnerPercentage" type="number" style={{width:'40%',display:'inline-block'}}/>%,计
-                                <Input placeholder="培训费分配" name="partnermoney" type="number" style={{width:'40%',display:'inline-block'}}/>人
+                      <FormItem style={{width:'40%',display:'inline-block'}}>
+                        {getFieldDecorator('partnerPercentage')(
+                              <div>
+                                <Input placeholder="培训费比例" name="partnerPercentage" type="number" style={{width:'80%'}}/>%,计
                             </div>
                         )}
+                      </FormItem>
+                      <FormItem style={{width:'40%',display:'inline-block'}}>
+                        {getFieldDecorator('partnermoney')(
+                          <div>
+                            <Input placeholder="培训费分配" name="partnermoney" type="number" style={{width:'80%'}}/>人
+                          </div>
+                        )}
+                      </FormItem>
                     </FormItem>
+
                     <FormItem {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">提交</Button>
                     </FormItem>
@@ -283,6 +302,34 @@ class UseForm extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+              let data={
+                projectName:values.pname,
+                isGoverEntrust:values.isGovernmentcommissionedprojects,
+                schoolUnit:values.office,
+                contact:values.linkman,
+                mobileNo:values.linknum,
+                trainingObject:values.trainees,
+                isEnterSchool:values.isOutofschoolpersonnelneedtoenterthecampus,
+                //isPartnerOutschool:values,
+                partnerUnit:values.partner,
+                trainingContent:values.content,
+                planStartTime:values.starttime.format('YYYY-MM-DD HH:mm:ss'),
+                planSupplyNum:values.enrollment,
+                trainingFee:values.trainingexpense,
+                heldFee:values.escrowfee,
+                trainingObjectParts:values.classunitPercentage,
+                trainingObjectAvg:values.classunitmoney,
+                partnerUnitParts:values.partnerPercentage,
+                partnerUnitAvg:values.partnermoney,
+                supplyName:getCookie('loginName')
+              };
+              postData(api+'/dhy/application/saveApplication',data,()=>{
+                let modal = Modal.success({
+                  title: '提示',
+                  content: '提交成功'
+                });
+                setTimeout(() => modal.destroy(), 800);
+              });
             }
         });
     }

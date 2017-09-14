@@ -5,9 +5,9 @@ import Foot from '../containers/Foot/foot.jsx'
 import Left from '../containers/Left/left.jsx'
 import {getCookie} from  '../util/cookie';
 import { hashHistory } from 'react-router';
-import '../static/css/antd.min.css'
 
-import './index.less'
+
+import './index.less';
 class App extends React.Component {
   constructor(props, context){
     super(props, context);

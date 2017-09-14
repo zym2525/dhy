@@ -34,7 +34,7 @@ class MenuList extends React.Component {
                             <ListItem primaryText="财务管理"  />
                         </Link>
                         <Link to="/FileUpload">
-                            <ListItem primaryText="发布模板文件"  />
+                            <ListItem primaryText="发布模板文件"  innerDivStyle={{paddingRight:'0'}}/>
                         </Link>
                     </List>
                 </MuiThemeProvider>

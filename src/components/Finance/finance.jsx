@@ -8,7 +8,7 @@ import {getCookie} from  '../../util/cookie';
 import { hashHistory } from 'react-router';
 import {api} from '../../util/common';
 import { postData } from '../../fetch/postData';
-import { Pagination } from 'antd';
+import { Pagination,Modal } from 'antd';
 
 import {textFieldStyle} from '../../config/style.js'
 import './finance.less'
@@ -36,12 +36,12 @@ class Finance extends React.Component {
                 <div className="finance-content">
                     {
                         this.state.feeList.map((item,index)=>
-                            <div className="item-box">
+                            <div className="item-box" key={index}>
                                 <ul className="item-title has-bottom">
-                                    <li className="finance-big-cell">1</li>
-                                    <li className="finance-big-cell">大学生村官培训</li>
-                                    <li className="finance-sm-cell time">2017-9-1</li>
-                                    <li className="finance-sm-cell">待审核</li>
+                                    <li className="finance-big-cell">{item.id}</li>
+                                    <li className="finance-big-cell">{item.projectName}</li>
+                                    <li className="finance-sm-cell time">{getLocalTime(item.createTime)}</li>
+                                    <li className="finance-sm-cell">{item.status==0?'待审核':'已审核'}</li>
                                 </ul>
                                 <ul className="item-content has-bottom">
                                     <li className="finance-big-cell">
@@ -54,6 +54,10 @@ class Finance extends React.Component {
                                                 floatingLabelShrinkStyle={textFieldStyle.floatingLabelShrinkStyle}
                                                 style={textFieldStyle.style}
                                                 underlineShow={false}
+                                                value={item.incomeOne}
+                                                disabled={item.disabled}
+                                                onChange={this.handleInputChange.bind(this,index,'incomeOne')}
+                                                type="number"
                                             />
                                         </MuiThemeProvider>
                                     </li>
@@ -67,35 +71,47 @@ class Finance extends React.Component {
                                                 floatingLabelShrinkStyle={textFieldStyle.floatingLabelShrinkStyle}
                                                 style={textFieldStyle.style}
                                                 underlineShow={false}
+                                                value={item.incomeTwo}
+                                                disabled={item.disabled}
+                                                type="number"
+                                                onChange={this.handleInputChange.bind(this,index,'incomeTwo')}
                                             />
                                         </MuiThemeProvider>
                                     </li>
+                                  {
+                                    item.status==0&&
                                     <li className="finance-sm-cell">
-                                        <MuiThemeProvider>
-                                            <FlatButton
-                                                label="编辑"
-                                                style={{
+                                      <MuiThemeProvider>
+                                        <FlatButton
+                                          label="编辑"
+                                          style={{
+                                                    width:'auto',
+                                                     'border':'1px solid #333',
+                                                    'marginTop':'6px',
+                                                    'lineHeight':'34px'
+                                                }}
+                                          onClick={this.edit.bind(this,index)}
+                                        />
+                                      </MuiThemeProvider>
+                                    </li>
+                                  }
+                                  {
+                                    item.status==0&&
+                                    <li className="finance-sm-cell">
+                                      <MuiThemeProvider>
+                                        <FlatButton
+                                          label="保存"
+                                          style={{
                                             width:'auto',
                                              'border':'1px solid #333',
                                             'marginTop':'6px',
                                             'lineHeight':'34px'
                                         }}
-                                            />
-                                        </MuiThemeProvider>
+                                        onClick={this.save.bind(this,index)}
+                                        />
+                                      </MuiThemeProvider>
                                     </li>
-                                    <li className="finance-sm-cell">
-                                        <MuiThemeProvider>
-                                            <FlatButton
-                                                label="保存"
-                                                style={{
-                                            width:'auto',
-                                             'border':'1px solid #333',
-                                            'marginTop':'6px',
-                                            'lineHeight':'34px'
-                                        }}
-                                            />
-                                        </MuiThemeProvider>
-                                    </li>
+                                  }
                                 </ul>
                             </div>
                         )
@@ -103,7 +119,9 @@ class Finance extends React.Component {
                 </div>
                 {
                     this.state.feeList.length>0
-                        ?<Pagination current={this.state.currentPage+1} total={this.state.total} pageSize={this.state.pageSize} onChange={this.handleChange.bind(this)}/>
+                        ?<div className="pagination-wrapper">
+                      <Pagination current={this.state.currentPage+1} total={this.state.total} pageSize={this.state.pageSize} onChange={this.handleChange.bind(this)}/>
+                      </div>
                         :<div>没有你要的数据</div>
                 }
             </div>
@@ -116,7 +134,7 @@ class Finance extends React.Component {
         }
         this.getList();
     }
-    handleChange(){
+    handleChange(page){
         this.setState({
             currentPage:page-1
         },()=>{
@@ -129,18 +147,57 @@ class Finance extends React.Component {
             pageSize
             }=this.state;
         let data={
-            supplyName:getCookie('username'),
+            supplyName:getCookie('loginName'),
             currentPage:currentPage,
             pageSize:pageSize
         };
         postData(api+'/dhy/fee/list',data,(result)=>{
-            // let themes=result.themes;
+            result.fees.map(x=>x.disabled=true);
             this.setState({
-                feeList:[],
+                feeList:result.fees,
                 total:result.total
             });
-            console.log(result)
+            console.log(result.fees)
         });
+    }
+    edit(index){
+      this.setState((oldState)=>{
+        oldState.feeList[index].disabled=false;
+        let newList=[...oldState.feeList];
+        return {
+          feeList:newList
+        }
+      });
+    }
+    handleInputChange(index,key,ev,value){
+      if(value!=''){
+        this.setState((oldState)=>{
+          oldState.feeList[index][key]=value;
+          let newList=[...oldState.feeList];
+          return {
+            feeList:newList
+          }
+        });
+      }
+    }
+    save(index){
+      let {feeList}=this.state;
+      let fee=feeList[index];
+      delete fee.disabled;
+      //let data={
+      //  applicationCode:fee['applicationCode'],
+      //  feeCode:fee['feeCode'],
+      //  projectName:fee['projectName'],
+      //  incomeOne:fee['incomeOne'],
+      //  incomeTwo:fee['incomeTwo']
+      //};
+      postData(api+'/dhy/fee/updateFee',fee,(result)=>{
+        let modal = Modal.success({
+          title: '提示',
+          content: '修改成功'
+        });
+        setTimeout(() => modal.destroy(), 800);
+      });
     }
 }
 export default Finance;

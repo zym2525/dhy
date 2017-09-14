@@ -1,8 +1,8 @@
 {
   "name": "react-cli",
   "version": "1.1.0",
-  "description": "react project based on vue-cli",
-  "author": "brucecham <brucecham@qq.com>",
+  "description": "react project",
+  "author": "zym",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -15,14 +15,6 @@
     "eslint": "eslint --ext .js src",
     "fix": "eslint --ext .js src  --fix"
   },
-  "precommit": [
-    "precommit-msg",
-    "eslint"
-  ],
-  "pre-commit": [
-    "precommit-msg",
-    "eslint"
-  ],
   "dependencies": {
     "antd": "^2.13.0",
     "axios": "^0.16.2",
