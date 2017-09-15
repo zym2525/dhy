@@ -40,6 +40,10 @@ class UseForm extends React.Component {
     constructor(props, context) {
         super(props, context)
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this)
+        this.state={
+          isPreview:false,
+          values:{}
+        };
     }
 
     render() {
@@ -60,7 +64,7 @@ class UseForm extends React.Component {
                         {getFieldDecorator('pname', {
                             rules: [{ required: true, message: '请输入培训项目名称!', whitespace: true }]
                         })(
-                            <Input placeholder="必填*" name="pname"/>
+                            <Input placeholder="必填*" name="pname" disabled={this.state.isPreview}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -75,7 +79,7 @@ class UseForm extends React.Component {
                         {getFieldDecorator('office', {
                             rules: [{ required: true, message: '请输入办班单位!', whitespace: true }]
                         })(
-                            <Input placeholder="必填*" name="office"/>
+                            <Input placeholder="必填*" name="office" disabled={this.state.isPreview}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -90,7 +94,7 @@ class UseForm extends React.Component {
                         {getFieldDecorator('linkman', {
                             rules: [{ required: true, message: '请输入联系人!', whitespace: true }]
                         })(
-                            <Input placeholder="必填*" name="linkman"/>
+                            <Input placeholder="必填*" name="linkman" disabled={this.state.isPreview}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -105,7 +109,7 @@ class UseForm extends React.Component {
                         {getFieldDecorator('linknum', {
                             rules: [{ required: true, message: '请输入联系人电话!', whitespace: true,pattern:/\d+/ }]
                         })(
-                            <Input placeholder="必填*" name="linknum"/>
+                            <Input placeholder="必填*" name="linknum" disabled={this.state.isPreview}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -113,24 +117,37 @@ class UseForm extends React.Component {
                         label="政府委托项目"
                     >
                         {getFieldDecorator('isGovernmentcommissionedprojects',{
-                            initialValue:'1'
+                            initialValue:1
                         })(
                             <RadioGroup onChange={this.handleRadioChange.bind(this)} name="isGovernmentcommissionedprojects">
-                                <Radio value='1'>是</Radio>
-                                <Radio value='0'>否</Radio>
+                                <Radio value={1} disabled={this.state.isPreview}>是</Radio>
+                                <Radio value={0} disabled={this.state.isPreview}>否</Radio>
                             </RadioGroup>
                         )}
+                    </FormItem>
+                    <FormItem
+                      {...formItemLayout}
+                      label="与校外单位合作举办"
+                    >
+                      {getFieldDecorator('isPartnerOutschool',{
+                        initialValue:1
+                      })(
+                        <RadioGroup onChange={this.handleRadioChange.bind(this)} name="isPartnerOutschool">
+                          <Radio value={1} disabled={this.state.isPreview}>是</Radio>
+                          <Radio value={0} disabled={this.state.isPreview}>否</Radio>
+                        </RadioGroup>
+                      )}
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
                         label="培训对象"
                     >
                         {getFieldDecorator('trainees',{
-                            initialValue:'0'
+                            initialValue:0
                         })(
                             <RadioGroup onChange={this.handleRadioChange.bind(this)} name="trainees">
-                                <Radio value='0'>社会人员</Radio>
-                                <Radio value='1'>本校在校生</Radio>
+                                <Radio value={0} disabled={this.state.isPreview}>社会人员</Radio>
+                                <Radio value={1} disabled={this.state.isPreview}>本校在校生</Radio>
                             </RadioGroup>
                         )}
                     </FormItem>
@@ -139,11 +156,11 @@ class UseForm extends React.Component {
                         label="校外人员要进入校园"
                     >
                         {getFieldDecorator('isOutofschoolpersonnelneedtoenterthecampus',{
-                            initialValue:'1'
+                            initialValue:1
                         })(
                             <RadioGroup onChange={this.handleRadioChange.bind(this)} name="isOutofschoolpersonnelneedtoenterthecampus">
-                                <Radio value='1'>是</Radio>
-                                <Radio value='0'>否</Radio>
+                                <Radio value={1} disabled={this.state.isPreview}>是</Radio>
+                                <Radio value={0} disabled={this.state.isPreview}>否</Radio>
                             </RadioGroup>
                         )}
                     </FormItem>
@@ -159,7 +176,7 @@ class UseForm extends React.Component {
                         {getFieldDecorator('partner', {
                             rules: [{ required: true, message: '请输入合作单位!', whitespace: true }]
                         })(
-                            <Input placeholder="必填*" name="partner"/>
+                            <Input placeholder="必填*" name="partner" disabled={this.state.isPreview}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -172,7 +189,7 @@ class UseForm extends React.Component {
                         hasFeedback
                     >
                         {getFieldDecorator('content',{})(
-                            <TextArea name="content"/>
+                            <TextArea name="content" disabled={this.state.isPreview}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -182,17 +199,7 @@ class UseForm extends React.Component {
                         {getFieldDecorator('starttime', {
                             rules: [{ type: 'object', required: true, message: '请选择时间！' }],
                         })(
-                            <DatePicker name="starttime"/>
-                        )}
-                    </FormItem>
-                    <FormItem
-                        {...formItemLayout}
-                        label="计划结束时间"
-                    >
-                        {getFieldDecorator('endtime', {
-                            rules: [{ type: 'object', required: true, message: '请选择时间！' }],
-                        })(
-                            <DatePicker name="endtime"/>
+                            <DatePicker name="starttime" disabled={this.state.isPreview}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -207,7 +214,7 @@ class UseForm extends React.Component {
                         {getFieldDecorator('enrollment', {
                             rules: [{ required: true, message: '请填写人数!', whitespace: true }]
                         })(
-                            <Input placeholder="必填*" name="enrollment" type="number"/>
+                            <Input placeholder="必填*" name="enrollment" type="number" disabled={this.state.isPreview}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -220,7 +227,7 @@ class UseForm extends React.Component {
                         hasFeedback
                     >
                         {getFieldDecorator('trainingexpense')(
-                            <Input placeholder="收费标准（元/人）" name="trainingexpense" type="number"/>
+                            <Input placeholder="收费标准（元/人）" name="trainingexpense" type="number" disabled={this.state.isPreview}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -233,7 +240,7 @@ class UseForm extends React.Component {
                         hasFeedback
                     >
                         {getFieldDecorator('escrowfee')(
-                            <Input placeholder="收费标准（元/人）" name="escrowfee" type="number"/>
+                            <Input placeholder="收费标准（元/人）" name="escrowfee" type="number" disabled={this.state.isPreview}/>
                         )}
                     </FormItem>
                     <FormItem
@@ -248,14 +255,14 @@ class UseForm extends React.Component {
                       <FormItem style={{width:'40%',display:'inline-block'}}>
                         {getFieldDecorator('classunitPercentage')(
                             <div>
-                                <Input placeholder="培训费比例" name="classunitPercentage" type="number" style={{width:'80%'}}/>%,计
+                                <Input placeholder="培训费比例" value={this.state.values.trainingObjectParts} name="classunitPercentage" type="number" style={{width:'80%'}} disabled={this.state.isPreview}/>%,计
                             </div>
                         )}
                       </FormItem>
                       <FormItem style={{width:'40%',display:'inline-block'}}>
                         {getFieldDecorator('classunitmoney')(
                           <div>
-                            <Input placeholder="培训费分配" name="classunitmoney" type="number" style={{width:'80%'}}/>人
+                            <Input placeholder="培训费分配" name="classunitmoney" type="number" style={{width:'80%'}} disabled={this.state.isPreview}/>人
                           </div>
                         )}
                       </FormItem>
@@ -272,22 +279,24 @@ class UseForm extends React.Component {
                       <FormItem style={{width:'40%',display:'inline-block'}}>
                         {getFieldDecorator('partnerPercentage')(
                               <div>
-                                <Input placeholder="培训费比例" name="partnerPercentage" type="number" style={{width:'80%'}}/>%,计
+                                <Input placeholder="培训费比例" name="partnerPercentage" type="number" style={{width:'80%'}} disabled={this.state.isPreview}/>%,计
                             </div>
                         )}
                       </FormItem>
                       <FormItem style={{width:'40%',display:'inline-block'}}>
                         {getFieldDecorator('partnermoney')(
                           <div>
-                            <Input placeholder="培训费分配" name="partnermoney" type="number" style={{width:'80%'}}/>人
+                            <Input placeholder="培训费分配" name="partnermoney" type="number" style={{width:'80%'}} disabled={this.state.isPreview}/>人
                           </div>
                         )}
                       </FormItem>
                     </FormItem>
-
-                    <FormItem {...tailFormItemLayout}>
+                  {
+                      !this.state.isPreview&&
+                      <FormItem {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">提交</Button>
-                    </FormItem>
+                      </FormItem>
+                  }
                 </Form>
             </div>
         )
@@ -297,11 +306,57 @@ class UseForm extends React.Component {
             hashHistory.push('/');
         }
     }
+    componentWillReceiveProps(nextProps){
+      //this.init(nextProps);
+    }
+    componentDidMount(){
+        this.init(this.props);
+    }
+    init(props){
+      let id=props.params.id;
+      if(id!='create'){
+        this.setState({
+          isPreview:true
+        });
+        let data={
+          applicationCode:id
+        };
+        postData(api+'/dhy/application/getApplicationInfo',data,(result)=>{
+          let values=result.application;
+          this.setState({
+            values:values
+          });
+          props.form.setFieldsValue({
+            pname:values.projectName,
+            isGovernmentcommissionedprojects:values.isGoverEntrust,
+            office:values.schoolUnit,
+            linkman:values.contact,
+            linknum:values.mobileNo,
+            trainees:values.trainingObject,
+            isOutofschoolpersonnelneedtoenterthecampus:values.isEnterSchool,
+            isPartnerOutschool:values.isPartnerOutschool,
+            partner:values.partnerUnit,
+            content:values.trainingContent,
+            enrollment:values.planSupplyNum,
+            trainingexpense:values.trainingFee,
+            escrowfee:values.heldFee,
+            classunitPercentage:values.trainingObjectParts,
+            classunitmoney:values.trainingObjectAvg,
+            partnerPercentage:values.partnerUnitParts,
+            partnermoney:values.partnerUnitAvg
+          });
+        });
+      }else{
+        this.setState({
+          isPreview:false,
+          values:[]
+        });
+      }
+    }
     handleSubmit(e){
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
               let data={
                 projectName:values.pname,
                 isGoverEntrust:values.isGovernmentcommissionedprojects,
@@ -310,7 +365,7 @@ class UseForm extends React.Component {
                 mobileNo:values.linknum,
                 trainingObject:values.trainees,
                 isEnterSchool:values.isOutofschoolpersonnelneedtoenterthecampus,
-                //isPartnerOutschool:values,
+                isPartnerOutschool:values.isPartnerOutschool,
                 partnerUnit:values.partner,
                 trainingContent:values.content,
                 planStartTime:values.starttime.format('YYYY-MM-DD HH:mm:ss'),
@@ -334,7 +389,6 @@ class UseForm extends React.Component {
         });
     }
     normFile(e) {
-        console.log('Upload event:', e);
         if (Array.isArray(e)) {
             return e;
         }

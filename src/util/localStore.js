@@ -1,25 +1,24 @@
 export default {
-  getItem: function(key) {
+  getItem: function (key) {
     let value
     try {
       value = localStorage.getItem(key)
-    } catch(ex){
-      if(__DEV__){
+    } catch (ex) {
+      if (__DEV__) {
         console.error('localStorage.getItem exception', ex.message)
       }
-    }finally {
-      return value;
+    } finally {
+      return value
     }
   },
-  setItem: function(key, value){
+  setItem: function (key, value) {
     try {
       localStorage.setItem(key, value)
     } catch (ex) {
-      if(__DEV__){
-        console.error('localStorage.setItem exception', ex.message);
+      if (__DEV__) {
+        console.error('localStorage.setItem exception', ex.message)
       }
     } finally {
-
     }
   }
 }

@@ -19,7 +19,7 @@ class App extends React.Component {
   render(){
     return(
       <div className="wapper">
-        <nav className="Logo"></nav>
+        <nav className="Logo">继续教育培训管理系统</nav>
         <div className="content clearfix">
             <Left/>
             <div className="right">

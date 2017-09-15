@@ -19,7 +19,7 @@ class UseMenu extends React.Component {
                         <Link to="/">
                             <ListItem primaryText="公告"/>
                         </Link>
-                        <Link to="/form">
+                        <Link to="/form/create">
                             <ListItem primaryText="填表"  />
                         </Link>
                         <Link to="/history">

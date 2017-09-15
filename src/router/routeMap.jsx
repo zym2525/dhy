@@ -26,7 +26,7 @@ class RouteMap extends React.Component {
           <Route path="/history" component={History}/>
           <Route path="/finance" component={Finance}/>
           <Route path="/fileUpload" component={FileUpload}/>
-          <Route path="/form" component={UseForm}/>
+          <Route path="/form/:id" component={UseForm}/>
           <Route path="/annonce/:id" component={Announce}/>
           <Route path="/themeInfo/:id" component={ThemeInfo}/>
           <Route path="/application/:id" component={Application}/>

@@ -58,7 +58,7 @@ class Audit extends React.Component {
         )
     }
     handeClick(id){
-      hashHistory.push('/application/'+id);
+      hashHistory.push('/form/'+id);
     }
     handleChange(page){
         this.setState({
