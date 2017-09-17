@@ -1,6 +1,6 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import Info from '../Info/info.jsx'
+import Form from '../Form/form.jsx'
 import {api} from '../../util/common';
 import { postData } from '../../fetch/postData';
 
@@ -15,20 +15,21 @@ class Application extends React.Component {
 
     render() {
         return (
-          <Info info={this.state.applicationInfo} />
+          <Form values={this.state.applicationInfo} isPreview={true}></Form>
         );
     }
   componentDidMount(){
-      let id=this.props.params.id;
-      let data={
-        applicationCode:id
-      };
-      postData(api+'/dhy/application/getApplicationInfo',data,(result)=>{
-        this.setState({
-          applicationInfo:result.application
-        });
-        console.log(result)
-      });
+    let id=this.props.params.id;
+    let data={
+      applicationCode:id
+    };
+    postData(api+'/dhy/application/getApplicationInfo',data,(result)=> {
+      let values = result.application;
+      console.log(values)
+      this.setState({
+        applicationInfo:values
+      })
+    });
   }
 }
 export default Application

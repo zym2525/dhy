@@ -10,7 +10,7 @@ import History from '../components/History/history.jsx'
 import Finance from '../components/Finance/finance.jsx'
 import FileUpload from '../components/FileUpload/fileUpload.jsx'
 import ThemeInfo from '../components/ThemeInfo/ThemeInfo.jsx'
-import UseForm from '../components/Form/form.jsx'
+import Formwrapper from '../components/FormWrapper/Formwrapper.jsx'
 import Application from  '../components/ApplicationInfo/applicationInfo.jsx'
 import NotFound from '../containers/404.jsx'
 
@@ -26,7 +26,7 @@ class RouteMap extends React.Component {
           <Route path="/history" component={History}/>
           <Route path="/finance" component={Finance}/>
           <Route path="/fileUpload" component={FileUpload}/>
-          <Route path="/form/:id" component={UseForm}/>
+          <Route path="/formwrapper" component={Formwrapper}/>
           <Route path="/annonce/:id" component={Announce}/>
           <Route path="/themeInfo/:id" component={ThemeInfo}/>
           <Route path="/application/:id" component={Application}/>

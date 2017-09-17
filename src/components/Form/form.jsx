@@ -41,8 +41,8 @@ class UseForm extends React.Component {
         super(props, context)
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this)
         this.state={
-          isPreview:false,
-          values:{}
+          isPreview:this.props.isPreview||false,
+          values:this.props.values||{}
         };
     }
 
@@ -62,6 +62,7 @@ class UseForm extends React.Component {
                         hasFeedback
                     >
                         {getFieldDecorator('pname', {
+                            initialValue:this.props.values&&this.props.values.projectName,
                             rules: [{ required: true, message: '请输入培训项目名称!', whitespace: true }]
                         })(
                             <Input placeholder="必填*" name="pname" disabled={this.state.isPreview}/>
@@ -77,6 +78,7 @@ class UseForm extends React.Component {
                         hasFeedback
                     >
                         {getFieldDecorator('office', {
+                            initialValue:this.props.values&&this.props.values.schoolUnit,
                             rules: [{ required: true, message: '请输入办班单位!', whitespace: true }]
                         })(
                             <Input placeholder="必填*" name="office" disabled={this.state.isPreview}/>
@@ -92,6 +94,7 @@ class UseForm extends React.Component {
                         hasFeedback
                     >
                         {getFieldDecorator('linkman', {
+                            initialValue:this.props.values&&this.props.values.contact,
                             rules: [{ required: true, message: '请输入联系人!', whitespace: true }]
                         })(
                             <Input placeholder="必填*" name="linkman" disabled={this.state.isPreview}/>
@@ -107,6 +110,7 @@ class UseForm extends React.Component {
                         hasFeedback
                     >
                         {getFieldDecorator('linknum', {
+                            initialValue:this.props.values&&this.props.values.mobileNo,
                             rules: [{ required: true, message: '请输入联系人电话!', whitespace: true,pattern:/\d+/ }]
                         })(
                             <Input placeholder="必填*" name="linknum" disabled={this.state.isPreview}/>
@@ -117,7 +121,7 @@ class UseForm extends React.Component {
                         label="政府委托项目"
                     >
                         {getFieldDecorator('isGovernmentcommissionedprojects',{
-                            initialValue:1
+                            initialValue:this.props.values&&this.props.values.isGoverEntrust||0
                         })(
                             <RadioGroup onChange={this.handleRadioChange.bind(this)} name="isGovernmentcommissionedprojects">
                                 <Radio value={1} disabled={this.state.isPreview}>是</Radio>
@@ -130,7 +134,7 @@ class UseForm extends React.Component {
                       label="与校外单位合作举办"
                     >
                       {getFieldDecorator('isPartnerOutschool',{
-                        initialValue:1
+                        initialValue:this.props.values&&this.props.isPartnerOutschool||0
                       })(
                         <RadioGroup onChange={this.handleRadioChange.bind(this)} name="isPartnerOutschool">
                           <Radio value={1} disabled={this.state.isPreview}>是</Radio>
@@ -143,7 +147,7 @@ class UseForm extends React.Component {
                         label="培训对象"
                     >
                         {getFieldDecorator('trainees',{
-                            initialValue:0
+                            initialValue:this.props.values&&this.props.values.trainingObject||0
                         })(
                             <RadioGroup onChange={this.handleRadioChange.bind(this)} name="trainees">
                                 <Radio value={0} disabled={this.state.isPreview}>社会人员</Radio>
@@ -156,7 +160,7 @@ class UseForm extends React.Component {
                         label="校外人员要进入校园"
                     >
                         {getFieldDecorator('isOutofschoolpersonnelneedtoenterthecampus',{
-                            initialValue:1
+                            initialValue:this.props.values&&this.props.values.isEnterSchool||0
                         })(
                             <RadioGroup onChange={this.handleRadioChange.bind(this)} name="isOutofschoolpersonnelneedtoenterthecampus">
                                 <Radio value={1} disabled={this.state.isPreview}>是</Radio>
@@ -174,6 +178,7 @@ class UseForm extends React.Component {
                         hasFeedback
                     >
                         {getFieldDecorator('partner', {
+                            initialValue:this.props.values&&this.props.values.partnerUnit,
                             rules: [{ required: true, message: '请输入合作单位!', whitespace: true }]
                         })(
                             <Input placeholder="必填*" name="partner" disabled={this.state.isPreview}/>
@@ -188,7 +193,9 @@ class UseForm extends React.Component {
                         )}
                         hasFeedback
                     >
-                        {getFieldDecorator('content',{})(
+                        {getFieldDecorator('content',{
+                          initialValue:this.props.values&&this.props.values.trainingContent,
+                        })(
                             <TextArea name="content" disabled={this.state.isPreview}/>
                         )}
                     </FormItem>
@@ -212,6 +219,7 @@ class UseForm extends React.Component {
                         hasFeedback
                     >
                         {getFieldDecorator('enrollment', {
+                            initialValue:this.props.values&&this.props.values.planSupplyNum,
                             rules: [{ required: true, message: '请填写人数!', whitespace: true }]
                         })(
                             <Input placeholder="必填*" name="enrollment" type="number" disabled={this.state.isPreview}/>
@@ -226,7 +234,9 @@ class UseForm extends React.Component {
                         )}
                         hasFeedback
                     >
-                        {getFieldDecorator('trainingexpense')(
+                        {getFieldDecorator('trainingexpense',{
+                          initialValue:this.props.values&&this.props.values.trainingFee
+                        })(
                             <Input placeholder="收费标准（元/人）" name="trainingexpense" type="number" disabled={this.state.isPreview}/>
                         )}
                     </FormItem>
@@ -239,7 +249,9 @@ class UseForm extends React.Component {
                         )}
                         hasFeedback
                     >
-                        {getFieldDecorator('escrowfee')(
+                        {getFieldDecorator('escrowfee',{
+                          initialValue:this.props.values&&this.props.values.heldFee
+                        })(
                             <Input placeholder="收费标准（元/人）" name="escrowfee" type="number" disabled={this.state.isPreview}/>
                         )}
                     </FormItem>
@@ -253,19 +265,21 @@ class UseForm extends React.Component {
                         hasFeedback
                     >
                       <FormItem style={{width:'40%',display:'inline-block'}}>
-                        {getFieldDecorator('classunitPercentage')(
-                            <div>
-                                <Input placeholder="培训费比例" value={this.state.values.trainingObjectParts} name="classunitPercentage" type="number" style={{width:'80%'}} disabled={this.state.isPreview}/>%,计
-                            </div>
+                        {getFieldDecorator('classunitPercentage',{
+                          initialValue:this.props.values&&this.props.values.trainingObjectParts
+                        })(
+                            <Input placeholder="培训费比例" name="classunitPercentage" type="number" style={{width:'80%'}} disabled={this.state.isPreview}/>
                         )}
                       </FormItem>
+                      <span>%,计</span>
                       <FormItem style={{width:'40%',display:'inline-block'}}>
-                        {getFieldDecorator('classunitmoney')(
-                          <div>
-                            <Input placeholder="培训费分配" name="classunitmoney" type="number" style={{width:'80%'}} disabled={this.state.isPreview}/>人
-                          </div>
+                        {getFieldDecorator('classunitmoney',{
+                          initialValue:this.props.values&&this.props.values.trainingObjectAvg
+                        })(
+                            <Input placeholder="培训费分配" name="classunitmoney" type="number" style={{width:'80%'}} disabled={this.state.isPreview}/>
                         )}
                       </FormItem>
+                      <span>人</span>
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
@@ -277,19 +291,21 @@ class UseForm extends React.Component {
                         hasFeedback
                     >
                       <FormItem style={{width:'40%',display:'inline-block'}}>
-                        {getFieldDecorator('partnerPercentage')(
-                              <div>
-                                <Input placeholder="培训费比例" name="partnerPercentage" type="number" style={{width:'80%'}} disabled={this.state.isPreview}/>%,计
-                            </div>
+                        {getFieldDecorator('partnerPercentage',{
+                          initialValue:this.props.values&&this.props.values.partnerUnitParts
+                        })(
+                                <Input placeholder="培训费比例" name="partnerPercentage" type="number" style={{width:'80%'}} disabled={this.state.isPreview}/>
                         )}
                       </FormItem>
+                      <span>%,计</span>
                       <FormItem style={{width:'40%',display:'inline-block'}}>
-                        {getFieldDecorator('partnermoney')(
-                          <div>
-                            <Input placeholder="培训费分配" name="partnermoney" type="number" style={{width:'80%'}} disabled={this.state.isPreview}/>人
-                          </div>
+                        {getFieldDecorator('partnermoney',{
+                          initialValue:this.props.values&&this.props.values.partnerUnitAvg
+                        })(
+                            <Input placeholder="培训费分配" name="partnermoney" type="number" style={{width:'80%'}} disabled={this.state.isPreview}/>
                         )}
                       </FormItem>
+                      <span>人</span>
                     </FormItem>
                   {
                       !this.state.isPreview&&
@@ -306,56 +322,67 @@ class UseForm extends React.Component {
             hashHistory.push('/');
         }
     }
-    componentWillReceiveProps(nextProps){
-      //this.init(nextProps);
+    componentDidUpdate(nextProps){
+      //if(nextProps.id!=this.state.oldId&&nextProps.id!=''){
+      //  this.init(nextProps);
+      //}
+       // this.init(nextProps);
     }
     componentDidMount(){
-        this.init(this.props);
+
+      //this.setState({
+      //  oldId:this.props.params.id
+      //},()=>{
+      //  this.init(this.props);
+      //});
+       //this.init(this.props);
     }
     init(props){
-      let id=props.params.id;
-      if(id!='create'){
-        this.setState({
-          isPreview:true
-        });
-        let data={
-          applicationCode:id
-        };
-        postData(api+'/dhy/application/getApplicationInfo',data,(result)=>{
-          let values=result.application;
-          this.setState({
-            values:values
-          });
-          props.form.setFieldsValue({
-            pname:values.projectName,
-            isGovernmentcommissionedprojects:values.isGoverEntrust,
-            office:values.schoolUnit,
-            linkman:values.contact,
-            linknum:values.mobileNo,
-            trainees:values.trainingObject,
-            isOutofschoolpersonnelneedtoenterthecampus:values.isEnterSchool,
-            isPartnerOutschool:values.isPartnerOutschool,
-            partner:values.partnerUnit,
-            content:values.trainingContent,
-            enrollment:values.planSupplyNum,
-            trainingexpense:values.trainingFee,
-            escrowfee:values.heldFee,
-            classunitPercentage:values.trainingObjectParts,
-            classunitmoney:values.trainingObjectAvg,
-            partnerPercentage:values.partnerUnitParts,
-            partnermoney:values.partnerUnitAvg
-          });
-        });
-      }else{
-        this.setState({
-          isPreview:false,
-          values:[]
-        });
-      }
+      //let id=props.params.id;
+      //if(id!='create'){
+      //  this.setState({
+      //    isPreview:true
+      //  });
+      //  let data={
+      //    applicationCode:id
+      //  };
+      //  postData(api+'/dhy/application/getApplicationInfo',data,(result)=>{
+      //    let values=result.application;
+      //    console.log(values)
+      //    this.setState({
+      //      values:values
+      //    });
+      //   // props.form.setFieldsValue({
+      //      //pname:values.projectName,
+      //      //isGovernmentcommissionedprojects:values.isGoverEntrust,
+      //      //office:values.schoolUnit,
+      //      //linkman:values.contact,
+      //      //linknum:values.mobileNo,
+      //      //trainees:values.trainingObject,
+      //      //isOutofschoolpersonnelneedtoenterthecampus:values.isEnterSchool,
+      //      //isPartnerOutschool:values.isPartnerOutschool,
+      //      //partner:values.partnerUnit,
+      //      //content:values.trainingContent,
+      //      //enrollment:values.planSupplyNum,
+      //      //trainingexpense:values.trainingFee,
+      //      //escrowfee:values.heldFee,
+      //      //classunitPercentage:values.trainingObjectParts,
+      //      //classunitmoney:values.trainingObjectAvg,
+      //      //partnerPercentage:values.partnerUnitParts,
+      //      //partnermoney:values.partnerUnitAvg
+      //   // });
+      //  });
+      //}else{
+      //  this.setState({
+      //    isPreview:false,
+      //    values:[]
+      //  });
+      //}
     }
     handleSubmit(e){
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
+          console.log(values)
             if (!err) {
               let data={
                 projectName:values.pname,
