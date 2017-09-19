@@ -18,7 +18,6 @@ class News extends React.Component {
             <div>
                 <dl className="news">
                     <dt>
-                        <div className="new-left">公告编号</div>
                         <div className="new-mid">公告名</div>
                         <div className="new-right">发布时间</div>
                         {
@@ -28,7 +27,6 @@ class News extends React.Component {
                     {
                         this.props.list.map((item,index)=>
                             <dd key={index}>
-                                <div className="new-left">{item.id}</div>
                                 <div className="new-mid" onClick={this.handeClick.bind(this,item.themeCode)}>{item.title}</div>
                                 <div className="new-right">{getLocalTime(item.createTime)}</div>
                                 {

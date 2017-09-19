@@ -3,6 +3,8 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import News from '../../containers/News'
 import { postData } from '../../fetch/postData';
 import {api} from '../../util/common';
+import {Tabs} from 'antd';
+const TabPane = Tabs.TabPane;
 
 class Theme extends React.Component {
     constructor(props, context) {
@@ -12,12 +14,19 @@ class Theme extends React.Component {
             themes:[],
             currentPage:0,
             pageSize:10,
-            total:0
+            total:0,
+            newsType:'0'
         };
     }
     render() {
         return (
+          <div>
+            <Tabs activeKey={this.state.newsType} onChange={this.tab.bind(this)}>
+              <TabPane tab="通知公告" key="0"/>
+              <TabPane tab="管理制度" key="1"/>
+            </Tabs>
             <News total={this.state.total} list={this.state.themes} papeChange={this.papeChange.bind(this)} current={this.state.currentPage+1}/>
+          </div>
         );
     }
     componentDidMount(){
@@ -29,6 +38,14 @@ class Theme extends React.Component {
         },()=>{
             this.getList();
         });
+    }
+    tab(key){
+      this.setState({
+        currentPage:0,
+        newsType:key
+      },()=>{
+        this.getList();
+      });
     }
     getList(){
         let {
@@ -46,7 +63,6 @@ class Theme extends React.Component {
                 themes:themes,
                 total:result.total
             });
-            console.log(result)
         });
     }
 }

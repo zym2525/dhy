@@ -11,7 +11,7 @@ class History extends React.Component {
 
     render() {
         return (
-           <Audit/>
+           <Audit isHistory={true}/>
         )
     }
 

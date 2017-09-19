@@ -3,8 +3,9 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import {getCookie} from  '../../util/cookie';
 import { hashHistory } from 'react-router';
 import { Form, Input, Tooltip, Upload,Button,Icon,Radio ,DatePicker,Modal } from 'antd';
-import {api} from '../../util/common';
+import {api,getLocalTime,showSuccess} from '../../util/common';
 import { postData } from '../../fetch/postData';
+import moment from 'moment';
 import './form.less';
 const { TextArea } = Input;
 const FormItem = Form.Item;
@@ -204,6 +205,7 @@ class UseForm extends React.Component {
                         label="计划开始时间"
                     >
                         {getFieldDecorator('starttime', {
+                            initialValue:this.props.values&&moment(getLocalTime(this.props.values.planStartTime), 'YYYY-MM-DD'),
                             rules: [{ type: 'object', required: true, message: '请选择时间！' }],
                         })(
                             <DatePicker name="starttime" disabled={this.state.isPreview}/>
@@ -319,7 +321,7 @@ class UseForm extends React.Component {
     }
     componentWillMount(){
         if(getCookie('accountType')!=0){
-            hashHistory.push('/');
+            //hashHistory.push('/');
         }
     }
     componentDidUpdate(nextProps){
@@ -329,7 +331,6 @@ class UseForm extends React.Component {
        // this.init(nextProps);
     }
     componentDidMount(){
-
       //this.setState({
       //  oldId:this.props.params.id
       //},()=>{
@@ -406,11 +407,7 @@ class UseForm extends React.Component {
                 supplyName:getCookie('loginName')
               };
               postData(api+'/dhy/application/saveApplication',data,()=>{
-                let modal = Modal.success({
-                  title: '提示',
-                  content: '提交成功'
-                });
-                setTimeout(() => modal.destroy(), 800);
+                showSuccess('提交成功');
               });
             }
         });
@@ -435,8 +432,8 @@ class UseForm extends React.Component {
                 isOutofschoolpersonnelneedtoenterthecampus:target.value
             });
         }
-
     }
+
 }
 UseForm = Form.create({})(UseForm);
 export default UseForm;

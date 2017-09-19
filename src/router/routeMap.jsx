@@ -29,7 +29,7 @@ class RouteMap extends React.Component {
           <Route path="/formwrapper" component={Formwrapper}/>
           <Route path="/annonce/:id" component={Announce}/>
           <Route path="/themeInfo/:id" component={ThemeInfo}/>
-          <Route path="/application/:id" component={Application}/>
+          <Route path="/application/:id/:type" component={Application}/>
           <Route path="/*" component={NotFound}/>
         </Route>
       </Router>

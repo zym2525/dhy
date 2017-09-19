@@ -1,14 +1,15 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import News from '../../containers/News'
-import { Form, Input, Tooltip, Upload,Button,Icon,Modal } from 'antd';
+import { Form, Input, Tooltip, Upload,Button,Icon,Select } from 'antd';
 import {getCookie} from  '../../util/cookie';
 import { hashHistory } from 'react-router';
-import {api} from '../../util/common';
+import {api,showSuccess} from '../../util/common';
 import { postData } from '../../fetch/postData';
 
 const { TextArea } = Input;
 const FormItem = Form.Item;
+const Option = Select.Option;
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
@@ -77,6 +78,21 @@ class Announce extends React.Component {
                            <TextArea autosize={{ minRows: 6 }} name="content"/>
                        )}
                    </FormItem>
+                   <FormItem
+                     {...formItemLayout}
+                     label="类型"
+                     hasFeedback
+                   >
+                     {getFieldDecorator('type', {
+                       rules: [{ required: true, message: '请选择类型!', whitespace: true }]
+                     })(
+                       <Select
+                       >
+                         <Option value='0'>通知公告</Option>
+                         <Option value='1'>管理制度</Option>
+                       </Select>
+                     )}
+                   </FormItem>
                    {
                        this.state.themeCode=='create'&&<FormItem
                            {...formItemLayout}
@@ -117,7 +133,7 @@ class Announce extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-               // console.log('Received values of form: ', values);
+                console.log('Received values of form: ', values);
                 if(this.state.themeCode=='create'){
                     this.saveTheme(values);
                 }else{
@@ -131,17 +147,13 @@ class Announce extends React.Component {
             title:values.annonceTitle,
             content:values.annonceContent||'',
             fileName:values['upload'][0]['name'],
-            type:11,
+            type:values.type,
             isTop:1,
             loginName:username
         };
         data['fileId']=values['upload'][0]['response']['data']['id'];
         postData(api+'/dhy/theme/saveTheme',data,(result)=>{
-            let modal = Modal.success({
-                title: '提示',
-                content: '发布成功',
-            });
-            setTimeout(() => modal.destroy(), 800);
+            showSuccess('发布成功');
         });
     }
     updateTheme(values){
@@ -152,11 +164,7 @@ class Announce extends React.Component {
             loginName:username
         };
         postData(api+'/dhy/theme/updateTheme',data,(result)=>{
-            let modal = Modal.success({
-                title: '提示',
-                content: '修改成功',
-            });
-            setTimeout(() => modal.destroy(), 800);
+            showSuccess('修改成功');
         });
     }
     normFile(e) {

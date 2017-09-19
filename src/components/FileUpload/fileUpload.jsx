@@ -21,13 +21,13 @@ const tailFormItemLayout = {
     wrapperCol: {
         xs: {
             span: 24,
-            offset: 0,
+            offset: 0
         },
         sm: {
             span: 14,
-            offset: 6,
-        },
-    },
+            offset: 6
+        }
+    }
 };
 
 const username=getCookie('username');
@@ -52,7 +52,7 @@ class FileUpload extends React.Component {
                             valuePropName: 'fileList1',
                             getValueFromEvent: this.normFile,
                         })(
-                            <Upload name={username} action={api+"/dhy/background/fileOperate/upload"} listType="text" data={this.getData.bind(this)}>
+                            <Upload name="file" action={api+"/dhy/background/fileOperate/upload"} listType="text" data={this.getData.bind(this)}>
                                 <Button>
                                     <Icon type="upload" />选择文件
                                 </Button>
@@ -67,7 +67,7 @@ class FileUpload extends React.Component {
                             valuePropName: 'fileList2',
                             getValueFromEvent: this.normFile,
                         })(
-                            <Upload name={username} action={api+"/dhy/background/fileOperate/upload"} listType="text" data={this.getData.bind(this)}>
+                            <Upload name="file" action={api+"/dhy/background/fileOperate/upload"} listType="text" data={this.getData.bind(this)}>
                                 <Button>
                                     <Icon type="upload" />选择文件
                                 </Button>
@@ -82,15 +82,12 @@ class FileUpload extends React.Component {
                             valuePropName: 'fileList3',
                             getValueFromEvent: this.normFile,
                         })(
-                            <Upload name={username} action={api+"/dhy/background/fileOperate/upload"} listType="text" data={this.getData.bind(this)}>
+                            <Upload name="file" action={api+"/dhy/background/fileOperate/upload"} listType="text" data={this.getData.bind(this)}>
                                 <Button>
                                     <Icon type="upload" />选择文件
                                 </Button>
                             </Upload>
                         )}
-                    </FormItem>
-                    <FormItem {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit">提交上传</Button>
                     </FormItem>
                 </Form>
             </div>
@@ -117,7 +114,10 @@ class FileUpload extends React.Component {
         return e && e.fileList;
     }
     getData(){
+      let username=getCookie('username');
         return {
+          fileType:12,
+          loginName:username
         }
     }
 }

@@ -27,8 +27,7 @@ class ThemeInfo extends React.Component {
           this.setState({
             themeInfo:result.themes[0]
           });
-          console.log(result)
         });
       }
 }
-export default ThemeInfo
+export default ThemeInfo;

@@ -15,4 +15,4 @@ export const textFieldStyle = {
   style: {
     width: '100%'
   }
-}
+};

@@ -5,8 +5,9 @@ import { postData } from '../../fetch/postData';
 import {getCookie} from  '../../util/cookie';
 import { hashHistory } from 'react-router';
 import {api} from '../../util/common';
-import { Modal, Button } from 'antd';
+import { Modal, Button ,Tabs} from 'antd';
 const confirm = Modal.confirm;
+const TabPane = Tabs.TabPane;
 
 class Manage extends React.Component {
     constructor(props, context) {
@@ -16,13 +17,20 @@ class Manage extends React.Component {
             themes:[],
             currentPage:0,
             pageSize:10,
-            total:0
+            total:0,
+            newsType:'0'
         };
     }
 
     render() {
         return (
+          <div>
+            <Tabs activeKey={this.state.newsType} onChange={this.tab.bind(this)}>
+              <TabPane tab="通知公告" key="0"/>
+              <TabPane tab="管理制度" key="1"/>
+            </Tabs>
             <News total={this.state.total} show={true} list={this.state.themes} handeDel={this.handeDel.bind(this)} papeChange={this.papeChange.bind(this)} current={this.state.currentPage+1}/>
+          </div>
         )
     }
     componentWillMount(){
@@ -56,13 +64,22 @@ class Manage extends React.Component {
             okType: 'danger'
         });
     }
+    tab(key){
+      this.setState({
+        currentPage:0,
+        newsType:key
+      },()=>{
+        this.getList();
+      });
+    }
     getList(){
         let {
             currentPage,
-            pageSize
+            pageSize,
+            newsType
             }=this.state;
         let data={
-            type:11,
+            type:newsType,
             currentPage:currentPage,
             pageSize:pageSize
         };
