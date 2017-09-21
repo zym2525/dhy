@@ -20,10 +20,10 @@ class UseMenu extends React.Component {
                             <ListItem primaryText="公告"/>
                         </Link>
                         <Link to="/formwrapper">
-                            <ListItem primaryText="填表"  />
+                            <ListItem primaryText="项目申报"  />
                         </Link>
-                        <Link to="/history">
-                            <ListItem primaryText="历史记录"  />
+                        <Link to="/audit">
+                            <ListItem primaryText="项目管理"  />
                         </Link>
                     </List>
                 </MuiThemeProvider>

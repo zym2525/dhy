@@ -19,6 +19,7 @@ class Login extends React.Component {
             isLogin:false,
             username:'',
             password:'',
+            alias:'',
             accountType:getCookie('accountType'),
         }
     }
@@ -151,7 +152,8 @@ class Login extends React.Component {
                 });
                 return {
                     isLogin:true,
-                    accountType:result.accountType
+                    accountType:result.accountType,
+                    alias:result.alias,
                 };
             })
         });
@@ -167,8 +169,8 @@ class Login extends React.Component {
         });
     }
     componentDidUpdate(){
-        let {username,isLogin,accountType}=this.state;
-        this.props.handleLogin(isLogin,username,accountType);
+        let {alias,isLogin,accountType}=this.state;
+        this.props.handleLogin(isLogin,alias,accountType);
     }
 }
 export default Login

@@ -25,6 +25,7 @@ class Application extends React.Component {
           {
             getCookie('accountType')==1&&this.state.applicationInfo.status==0&&
             <div style={{textAlign:'right'}}>
+              <a className="fl" target="_bank">下载附件</a>
               <Button style={{marginRight:'20px'}} type="primary" onClick={this.pass.bind(this)}>通过</Button>
               <Button style={{marginRight:'10px'}} type="primary" onClick={this.noPass.bind(this)}>不通过</Button>
             </div>

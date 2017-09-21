@@ -12,6 +12,7 @@ import FileUpload from '../components/FileUpload/fileUpload.jsx'
 import ThemeInfo from '../components/ThemeInfo/ThemeInfo.jsx'
 import Formwrapper from '../components/FormWrapper/Formwrapper.jsx'
 import Application from  '../components/ApplicationInfo/applicationInfo.jsx'
+import UploadForms from '../components/UploadForms/uploadForms.jsx'
 import NotFound from '../containers/404.jsx'
 
 
@@ -27,6 +28,7 @@ class RouteMap extends React.Component {
           <Route path="/finance" component={Finance}/>
           <Route path="/fileUpload" component={FileUpload}/>
           <Route path="/formwrapper" component={Formwrapper}/>
+          <Route path="/uploadForms" component={UploadForms}/>
           <Route path="/annonce/:id" component={Announce}/>
           <Route path="/themeInfo/:id" component={ThemeInfo}/>
           <Route path="/application/:id/:type" component={Application}/>
