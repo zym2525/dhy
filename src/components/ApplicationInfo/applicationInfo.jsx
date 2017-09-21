@@ -15,7 +15,8 @@ class Application extends React.Component {
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state={
-          applicationInfo:{}
+          applicationInfo:{},
+          downloadId:''
         }
     }
     render() {
@@ -25,7 +26,10 @@ class Application extends React.Component {
           {
             getCookie('accountType')==1&&this.state.applicationInfo.status==0&&
             <div style={{textAlign:'right'}}>
-              <a className="fl" target="_bank">下载附件</a>
+              {
+                this.props.params.type!=0&&
+                <a href={api+'/dhy/background/fileOperate/download?fileId='+this.state.downloadId} className="fl" target="_bank">下载附件</a>
+              }
               <Button style={{marginRight:'20px'}} type="primary" onClick={this.pass.bind(this)}>通过</Button>
               <Button style={{marginRight:'10px'}} type="primary" onClick={this.noPass.bind(this)}>不通过</Button>
             </div>
@@ -40,7 +44,8 @@ class Application extends React.Component {
     postData(api+arrTypeUrl[type],data,(result)=> {
       let values = result[arrTypName[type]];
       this.setState({
-        applicationInfo:values
+        applicationInfo:values,
+        downloadId:values.id
       })
     });
   }

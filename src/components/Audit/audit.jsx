@@ -39,7 +39,7 @@ class Audit extends React.Component {
                   <TabPane tab="申请表" key="0"/>
                   <TabPane tab="备案表" key="1"/>
                   <TabPane tab="开班表" key="2"/>
-                  <TabPane tab="开班表" key="3"/>
+                  <TabPane tab="结业表" key="3"/>
                 </Tabs>
               <div className="clearfix">
                 <Select className="fr" defaultValue="2017" style={{ width: 120 }} onChange={this.handleSelect.bind(this)}>
@@ -84,7 +84,7 @@ class Audit extends React.Component {
       if(getCookie('accountType')==1){
         hashHistory.push('/application/'+id+'/'+this.state.newsType);
       }else{
-        hashHistory.push('/uploadForms')
+        hashHistory.push('/uploadForms/'+this.state.newsType)
       }
     }
     handleChange(page){
