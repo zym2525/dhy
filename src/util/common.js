@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017/9/7.
  */
-//git commit - 'zym' --no-verify
+//git commit -m 'zym' --no-verify
 // https://rsuitejs.com/getting-started
 import React from 'react'
 import Layer from 'react-layer'
