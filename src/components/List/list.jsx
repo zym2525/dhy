@@ -28,13 +28,13 @@ class MenuList extends React.Component {
                             <ListItem primaryText="项目审核"  />
                         </Link>
                         <Link to="/history">
-                            <ListItem primaryText="历史记录"  />
+                            <ListItem primaryText="项目管理"  />
                         </Link>
                         <Link to="/Finance">
                             <ListItem primaryText="财务管理"  />
                         </Link>
                         <Link to="/FileUpload">
-                            <ListItem primaryText="发布模板文件"  innerDivStyle={{paddingRight:'0'}}/>
+                            <ListItem primaryText="表格上传"  innerDivStyle={{paddingRight:'0'}}/>
                         </Link>
                     </List>
                 </MuiThemeProvider>

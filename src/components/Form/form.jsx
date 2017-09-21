@@ -395,15 +395,15 @@ class UseForm extends React.Component {
                 isEnterSchool:values.isOutofschoolpersonnelneedtoenterthecampus,
                 isPartnerOutschool:values.isPartnerOutschool,
                 partnerUnit:values.partner,
-                trainingContent:values.content,
+                trainingContent:values.content||'',
                 planStartTime:values.starttime.format('YYYY-MM-DD HH:mm:ss'),
                 planSupplyNum:values.enrollment,
-                trainingFee:values.trainingexpense,
-                heldFee:values.escrowfee,
-                trainingObjectParts:values.classunitPercentage,
-                trainingObjectAvg:values.classunitmoney,
-                partnerUnitParts:values.partnerPercentage,
-                partnerUnitAvg:values.partnermoney,
+                trainingFee:values.trainingexpense||'',
+                heldFee:values.escrowfee||'',
+                trainingObjectParts:values.classunitPercentage||'',
+                trainingObjectAvg:values.classunitmoney||'',
+                partnerUnitParts:values.partnerPercentage||'',
+                partnerUnitAvg:values.partnermoney||'',
                 supplyName:getCookie('loginName')
               };
               postData(api+'/dhy/application/saveApplication',data,()=>{

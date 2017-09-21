@@ -3,8 +3,8 @@
  */
 //git commit -m 'zym' --no-verify
 // https://rsuitejs.com/getting-started
-import React from 'react'
-import Layer from 'react-layer'
+import React from 'react';
+import Layer from 'react-layer';
 import {Modal} from 'antd';
 
 let imgUrl = require('../../images/loading1.gif');
@@ -31,9 +31,9 @@ export function alertLoading () {
     return (
       <div className="loadingMask"><img src={imgUrl}/></div>
     )
-  })
-  layer.render()
-  return layer
+  });
+  layer.render();
+  return layer;
 }
 
 export function showSuccess (content,title='提示') {

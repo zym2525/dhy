@@ -1,13 +1,15 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import '../../static/css/commonList.less'
-import { Pagination,Tabs } from 'antd';
+import { Pagination,Tabs ,Select } from 'antd';
 import '../../static/css/commonList.less'
 import {getCookie} from  '../../util/cookie';
 import {api,getLocalTime} from '../../util/common';
 import { postData } from '../../fetch/postData';
 import { hashHistory } from 'react-router';
 const TabPane = Tabs.TabPane;
+const Option = Select.Option;
+
 
 import './audit.less';
 const arrFormAdd=['application','record','open'];
@@ -24,18 +26,29 @@ class Audit extends React.Component {
             pageSize:10,
             applicationList:[],
             total:0,
-            newsType:'0'
+            newsType:'0',
+            nowYear:'2017'
         };
     }
 
     render() {
         return (
             <div>
+
                 <Tabs activeKey={this.state.newsType} onChange={this.tab.bind(this)}>
                   <TabPane tab="申请表" key="0"/>
                   <TabPane tab="备案表" key="1"/>
                   <TabPane tab="开班表" key="2"/>
+                  <TabPane tab="开班表" key="3"/>
                 </Tabs>
+              <div className="clearfix">
+                <Select className="fr" defaultValue="2017" style={{ width: 120 }} onChange={this.handleSelect.bind(this)}>
+                  <Option value="2017">2017</Option>
+                  <Option value="2018">2018</Option>
+                  <Option value="2019">2019</Option>
+                  <Option value="2020">2020</Option>
+                </Select>
+              </div>
                 <dl className="news audit">
                     <dt>
                         <div className="new-left">编号</div>
@@ -68,7 +81,11 @@ class Audit extends React.Component {
         )
     }
     handeClick(id){
-      hashHistory.push('/application/'+id+'/'+this.state.newsType);
+      if(getCookie('accountType')==1){
+        hashHistory.push('/application/'+id+'/'+this.state.newsType);
+      }else{
+        hashHistory.push('/uploadForms')
+      }
     }
     handleChange(page){
         this.setState({
@@ -76,6 +93,13 @@ class Audit extends React.Component {
         },()=>{
             this.getList();
         });
+    }
+    handleSelect(value){
+      this.setState({
+        nowYear:value
+      },()=>{
+        this.getList();
+      });
     }
     componentDidMount(){
         this.getList();
@@ -92,12 +116,14 @@ class Audit extends React.Component {
         let {
             currentPage,
             pageSize,
-            newsType
+            newsType,
+            nowYear
             }=this.state;
         let data={
             supplyName:getCookie('loginName'),
             currentPage:currentPage,
-            pageSize:pageSize
+            pageSize:pageSize,
+            year:nowYear
         };
         let address='';
         this.props.isHistory?address='/listHistory':address='/list';

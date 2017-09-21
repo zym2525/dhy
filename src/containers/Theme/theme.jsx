@@ -50,10 +50,11 @@ class Theme extends React.Component {
     getList(){
         let {
             currentPage,
-            pageSize
+            pageSize,
+            newsType
             }=this.state;
         let data={
-            type:11,
+            type:newsType,
             currentPage:currentPage,
             pageSize:pageSize
         };
