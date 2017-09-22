@@ -12,10 +12,10 @@ const Option = Select.Option;
 
 
 import './audit.less';
-const arrFormAdd=['application','record','open'];
-const arrFormData=['applications','records','opens'];
+const arrFormAdd=['application','record','open','graduation'];
+const arrFormData=['applications','records','opens','graduations'];
 const arrStatus=['未审核','通过','未通过'];
-const arrTypeCode=['applicationCode','recordCode','openCode'];
+const arrTypeCode=['applicationCode','recordCode','openCode','graduationCode'];
 
 class Audit extends React.Component {
     constructor(props, context) {
@@ -61,7 +61,7 @@ class Audit extends React.Component {
                         this.state.applicationList.map((item,index)=>
                             <dd key={index}>
                                 <div className="new-left">{item.id}</div>
-                                <div className="new-mid" onClick={this.handeClick.bind(this,item[arrTypeCode[this.state.newsType]])}>{item.projectName}</div>
+                                <div className="new-mid" onClick={this.handeClick.bind(this,item[arrTypeCode[this.state.newsType]],item.id,item.isGraduate)}>{item.projectName}</div>
                                 <div className="new-right">{getLocalTime(item.createTime)}</div>
                                 <div className="proposer">{item.supplyName}</div>
                                 <div className="status">{arrStatus[item.status]}</div>
@@ -80,11 +80,13 @@ class Audit extends React.Component {
             </div>
         )
     }
-    handeClick(id){
+    handeClick(code,id,isGraduate){
+      let type=this.state.newsType;
       if(getCookie('accountType')==1){
-        hashHistory.push('/application/'+id+'/'+this.state.newsType);
+        type>0?hashHistory.push('/application/'+code+'/'+type):hashHistory.push('/application/'+id+'/'+type);
       }else{
-        hashHistory.push('/uploadForms/'+this.state.newsType)
+        //isGraduate
+        type>0?hashHistory.push('/uploadForms/'+type):hashHistory.push('/uploadForms/'+type+'?isGraduate='+isGraduate);
       }
     }
     handleChange(page){

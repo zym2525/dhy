@@ -1,9 +1,10 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import {api} from '../../util/common';
-import { Upload,Button,Icon } from 'antd';
+import {api,getFromUrl} from '../../util/common';
 import {getCookie} from  '../../util/cookie';
 import { postData } from '../../fetch/postData';
+import UploadBtn from '../../components/UploadBtn/uploadBtn.jsx';
+
 const styleUpload={
   marginTop:'20px'
 }
@@ -14,17 +15,21 @@ class UploadForms extends React.Component {
         super(props, context);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
         this.state={
-          files:[]
+          files:[],
+          fileData1:{},
+          fileData2:{}
         };
     }
 
     render() {
         const type=this.props.params.type;
+        const isGraduate=getFromUrl('isGraduate');
+        console.log(isGraduate)
         return (
             <div className="UploadForms">
               <div className="common-title">上传文件</div>
               {
-                this.state.files.map((item,index)=>
+                type==0&&this.state.files.map((item,index)=>
                   <div className="download-record" key={index} style={{marginTop:'10px'}}>
                     <span>{item.fileName}</span>
                     <a href={api+'/dhy/background/fileOperate/download?fileId='+item.id} target="_bank">点击下载</a>
@@ -32,15 +37,27 @@ class UploadForms extends React.Component {
                 )
               }
               {
-                type==1
-                ?<div className="upload-wrapper" style={styleUpload}>
-                  <Upload name="file" action={api+"/dhy/background/fileOperate/upload"} listType="text" data={this.getRecordData.bind(this)}>
-                    <Button>
-                      <Icon type="upload" />上传备案表
-                    </Button>
-                  </Upload>
+                type==0&&
+                <div>
+                  {
+                    isGraduate==1&&
+                    <div className="upload-wrapper" style={styleUpload}>
+                      <UploadBtn name="上传备案表" getData={this.getRecordData} callback={this.}/>
+                    </div>
+                  }
+                  {
+                    isGraduate==0&&
+                    <div className="upload-wrapper" style={styleUpload}>
+                      <UploadBtn name="上传开班学员名单" getData={this.getStudentFormData}/>
+                    </div>
+                  }
+                  {
+                    isGraduate==0&&
+                    <div className="upload-wrapper" style={styleUpload}>
+                      <UploadBtn name="上传开班表" getData={this.getOpenData}/>
+                    </div>
+                  }
                 </div>
-                :''
               }
 
             </div>
@@ -52,11 +69,15 @@ class UploadForms extends React.Component {
       }
     }
     componentDidMount(){
-      postData(api+'/dhy/background/fileOperate/list',{type:12},(result)=>{
-        this.setState({
-          files:result.uploads
+      const type=this.props.params.type;
+      if(type==0){
+        postData(api+'/dhy/background/fileOperate/list',{type:12},(result)=>{
+          this.setState({
+            files:result.uploads
+          });
         });
-      });
+      }
+
     }
     getRecordData(){
       return{
@@ -64,17 +85,20 @@ class UploadForms extends React.Component {
         loginName:username
       };
     }
-    downloadFiles(){
-
-        //for(let i=0;i<result.uploads.length;i++){
-        //  let file=result.uploads[i];
-        //  let oA=document.createElement('a');
-        //  oA.href=`${api}/dhy/background/fileOperate/download?fileId=${file['id']}`;
-        //  oA.download=file['fileName'];
-        //  oA.click();
-        //}
-
+    getStudentFormData(){
+      return{
+        fileType:3,
+        loginName:username
+      };
+    }
+    getOpenData(){
+      return{
+        fileType:4,
+        loginName:username
+      };
     }
 }
+
+
 
 export default UploadForms;

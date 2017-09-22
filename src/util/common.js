@@ -43,3 +43,17 @@ export function showSuccess (content,title='提示') {
   });
   setTimeout(() => modal.destroy(), 800);
 }
+
+//获取url参数
+export function getFromUrl(key) {
+  var urlInfo = location.search.substring(1).split('&');
+  for (var i = 0; i < urlInfo.length; i++) {
+    var name = urlInfo[i].split('=')[0];
+    var value = urlInfo[i].split('=')[1];
+    if (key === name) {
+      return value;
+      break;
+    }
+  }
+  return '';
+}
