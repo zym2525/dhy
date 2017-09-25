@@ -23,7 +23,7 @@ class App extends React.Component {
         <div className="content clearfix">
             <Left/>
             <div className="right">
-                <div className="right-box">
+                <div className="right-box" >
                     {
                         this.state.initDone
                             ? this.props.children

@@ -21,8 +21,10 @@ class UploadBtn extends React.Component {
     handleChange(files){
       console.log(files)
       if(files.file.status=='done'){
-        let id=files.file.response.data.id;
-        console.log(id)
+        let data=files.file.response.data;
+        let id=data.id;
+        let name=data.fileName;
+        this.props.callback(id,name);
       }
     }
 }

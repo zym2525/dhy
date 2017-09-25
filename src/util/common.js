@@ -57,3 +57,23 @@ export function getFromUrl(key) {
   }
   return '';
 }
+
+export function createData(type,id){
+  if(type==0){
+    return {
+      id:id
+    };
+  }else if(type==1){
+    return {
+      recordCode:id
+    };
+  }else if(type==2){
+    return {
+      openCode:id
+    };
+  }else if(type==3){
+    return {
+      graduationCode:id
+    };
+  }
+}

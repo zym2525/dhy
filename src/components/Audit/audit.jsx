@@ -61,7 +61,7 @@ class Audit extends React.Component {
                         this.state.applicationList.map((item,index)=>
                             <dd key={index}>
                                 <div className="new-left">{item.id}</div>
-                                <div className="new-mid" onClick={this.handeClick.bind(this,item[arrTypeCode[this.state.newsType]],item.id,item.isGraduate)}>{item.projectName}</div>
+                                <div className="new-mid" onClick={this.handeClick.bind(this,item[arrTypeCode[this.state.newsType]],item)}>{item.projectName}</div>
                                 <div className="new-right">{getLocalTime(item.createTime)}</div>
                                 <div className="proposer">{item.supplyName}</div>
                                 <div className="status">{arrStatus[item.status]}</div>
@@ -80,13 +80,13 @@ class Audit extends React.Component {
             </div>
         )
     }
-    handeClick(code,id,isGraduate){
+    handeClick(code,item){
       let type=this.state.newsType;
       if(getCookie('accountType')==1){
-        type>0?hashHistory.push('/application/'+code+'/'+type):hashHistory.push('/application/'+id+'/'+type);
+        type>0?hashHistory.push('/application/'+code+'/'+type):hashHistory.push('/application/'+item.id+'/'+type);
       }else{
         //isGraduate
-        type>0?hashHistory.push('/uploadForms/'+type):hashHistory.push('/uploadForms/'+type+'?isGraduate='+isGraduate);
+        type>0?hashHistory.push('/uploadForms/'+type+'?id='+code):hashHistory.push('/uploadForms/'+type+'?isGraduate='+item.isGraduate+'&projectName='+item.projectName+'&supplyName='+item.supplyName);
       }
     }
     handleChange(page){

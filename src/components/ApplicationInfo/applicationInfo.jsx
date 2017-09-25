@@ -1,7 +1,7 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Form from '../Form/form.jsx'
-import {api,showSuccess} from '../../util/common';
+import {api,showSuccess,createData} from '../../util/common';
 import { postData } from '../../fetch/postData';
 import {getCookie} from  '../../util/cookie';
 import {Button} from 'antd';
@@ -95,22 +95,4 @@ class Application extends React.Component {
 }
 export default Application
 
-function createData(type,id){
-  if(type==0){
-    return {
-      id:id
-    };
-  }else if(type==1){
-    return {
-      recordCode:id
-    };
-  }else if(type==2){
-    return {
-      openCode:id
-    };
-  }else if(type==3){
-    return {
-      graduationCode:id
-    };
-  }
-}
+
