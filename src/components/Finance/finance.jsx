@@ -185,6 +185,7 @@ class Finance extends React.Component {
       let fee=feeList[index];
       delete fee.disabled;
       postData(api+'/dhy/fee/updateFee',fee,(result)=>{
+
         let modal = Modal.success({
           title: '提示',
           content: '修改成功'
