@@ -159,6 +159,7 @@ class UploadForms extends React.Component {
 
       let data={
         projectName:this.props.location.query.projectName,
+        applicationCode:this.props.location.query.code,
         supplyName:this.props.location.query.supplyName,
         fileId:fileOneId,
         fileIdTwo:fileTwoId,

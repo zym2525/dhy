@@ -86,7 +86,15 @@ class Audit extends React.Component {
         type>0?hashHistory.push('/application/'+code+'/'+type):hashHistory.push('/application/'+item.id+'/'+type);
       }else{
         //isGraduate
-        type>0?hashHistory.push('/uploadForms/'+type+'?id='+code):hashHistory.push('/uploadForms/'+type+'?isGraduate='+item.isGraduate+'&projectName='+item.projectName+'&supplyName='+item.supplyName);
+        type>0?hashHistory.push('/uploadForms/'+type+'?id='+code):hashHistory.push({
+          pathname:'/uploadForms/'+type,
+          query:{
+            isGraduate:item.isGraduate,
+            projectName:item.projectName,
+            supplyName:item.supplyName,
+            code:item.applicationCode
+          }
+        });
       }
     }
     handleChange(page){

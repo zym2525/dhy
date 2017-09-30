@@ -324,62 +324,7 @@ class UseForm extends React.Component {
             //hashHistory.push('/');
         }
     }
-    componentDidUpdate(nextProps){
-      //if(nextProps.id!=this.state.oldId&&nextProps.id!=''){
-      //  this.init(nextProps);
-      //}
-       // this.init(nextProps);
-    }
-    componentDidMount(){
-      //this.setState({
-      //  oldId:this.props.params.id
-      //},()=>{
-      //  this.init(this.props);
-      //});
-       //this.init(this.props);
-    }
-    init(props){
-      //let id=props.params.id;
-      //if(id!='create'){
-      //  this.setState({
-      //    isPreview:true
-      //  });
-      //  let data={
-      //    applicationCode:id
-      //  };
-      //  postData(api+'/dhy/application/getApplicationInfo',data,(result)=>{
-      //    let values=result.application;
-      //    console.log(values)
-      //    this.setState({
-      //      values:values
-      //    });
-      //   // props.form.setFieldsValue({
-      //      //pname:values.projectName,
-      //      //isGovernmentcommissionedprojects:values.isGoverEntrust,
-      //      //office:values.schoolUnit,
-      //      //linkman:values.contact,
-      //      //linknum:values.mobileNo,
-      //      //trainees:values.trainingObject,
-      //      //isOutofschoolpersonnelneedtoenterthecampus:values.isEnterSchool,
-      //      //isPartnerOutschool:values.isPartnerOutschool,
-      //      //partner:values.partnerUnit,
-      //      //content:values.trainingContent,
-      //      //enrollment:values.planSupplyNum,
-      //      //trainingexpense:values.trainingFee,
-      //      //escrowfee:values.heldFee,
-      //      //classunitPercentage:values.trainingObjectParts,
-      //      //classunitmoney:values.trainingObjectAvg,
-      //      //partnerPercentage:values.partnerUnitParts,
-      //      //partnermoney:values.partnerUnitAvg
-      //   // });
-      //  });
-      //}else{
-      //  this.setState({
-      //    isPreview:false,
-      //    values:[]
-      //  });
-      //}
-    }
+
     handleSubmit(e){
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
