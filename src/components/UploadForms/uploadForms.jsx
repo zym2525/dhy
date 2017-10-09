@@ -95,7 +95,7 @@ class UploadForms extends React.Component {
     }
     componentDidMount(){
       const type=this.props.params.type;
-      if(type==0){
+      if(type==0||type==1){
         postData(api+'/dhy/background/fileOperate/list',{type:12},(result)=>{
           this.setState({
             files:result.uploads

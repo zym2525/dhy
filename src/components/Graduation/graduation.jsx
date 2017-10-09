@@ -43,7 +43,7 @@ class Graduation extends React.Component {
             <FormItem
               {...formItemLayout}
               label={(<span>总收入一</span>)}
-              style={{width:'40%',display:'inline-block'}}
+              style={{width:'60%',display:'inline-block'}}
               hasFeedback
             >
               {getFieldDecorator('incomeOne',{
@@ -59,7 +59,7 @@ class Graduation extends React.Component {
             <FormItem
               {...formItemLayout}
               label={(<span>合作单位分成</span>)}
-              style={{width:'40%',display:'inline-block'}}
+              style={{width:'60%',display:'inline-block'}}
               hasFeedback
             >
               {getFieldDecorator('pratnerIncome',{
@@ -75,7 +75,7 @@ class Graduation extends React.Component {
             <FormItem
               {...formItemLayout}
               label={(<span>上交学校</span>)}
-              style={{width:'40%',display:'inline-block'}}
+              style={{width:'60%',display:'inline-block'}}
               hasFeedback
             >
               {getFieldDecorator('schoolIncome',{
@@ -91,7 +91,7 @@ class Graduation extends React.Component {
             <FormItem
               {...formItemLayout}
               label={(<span>成本支出</span>)}
-              style={{width:'40%',display:'inline-block'}}
+              style={{width:'60%',display:'inline-block'}}
               hasFeedback
             >
               {getFieldDecorator('costPay',{
