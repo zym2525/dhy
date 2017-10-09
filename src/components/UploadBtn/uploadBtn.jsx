@@ -24,7 +24,7 @@ class UploadBtn extends React.Component {
         let data=files.file.response.data;
         let id=data.id;
         let name=data.fileName;
-        this.props.callback(id,name);
+        this.props.callback(id,name,files.fileList);
       }
     }
 }

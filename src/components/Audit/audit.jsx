@@ -93,7 +93,8 @@ class Audit extends React.Component {
             projectName:item.projectName,
             supplyName:item.supplyName,
             code:item.applicationCode
-          }
+          },
+          state:item
         });
       }
     }

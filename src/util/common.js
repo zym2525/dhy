@@ -6,7 +6,7 @@
 import React from 'react';
 import Layer from 'react-layer';
 import {Modal} from 'antd';
-
+console.log(process.env.NODE_ENV)
 let imgUrl = require('../../images/loading1.gif');
 // https://github.com/BruceCham/react-cli/tree/master/src
 export const api = 'http://120.25.247.79';
@@ -38,6 +38,14 @@ export function alertLoading () {
 
 export function showSuccess (content,title='提示') {
   let modal = Modal.success({
+    title: title,
+    content: content
+  });
+  setTimeout(() => modal.destroy(), 800);
+}
+
+export function showInfo (content,title='提示') {
+  let modal = Modal.info({
     title: title,
     content: content
   });
