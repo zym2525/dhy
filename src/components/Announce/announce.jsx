@@ -32,7 +32,7 @@ const tailFormItemLayout = {
         },
     },
 };
-const username=getCookie('loginName');
+
 
 
 import './announce.less'
@@ -125,9 +125,12 @@ class Announce extends React.Component {
         const themeCode=this.props.params.id;
         if(themeCode){
             this.setState({
-                themeCode:themeCode
+                themeCode:themeCode,
             });
         }
+        this.setState({
+          username:getCookie('loginName')
+        });
     }
     handleSubmit(e){
         e.preventDefault();
@@ -149,7 +152,7 @@ class Announce extends React.Component {
             fileName:values['upload'][0]['name'],
             type:values.type,
             isTop:1,
-            loginName:username
+            loginName:this.state.username
         };
         data['fileId']=values['upload'][0]['response']['data']['id'];
         postData(api+'/dhy/theme/saveTheme',data,(result)=>{
@@ -161,7 +164,7 @@ class Announce extends React.Component {
             title:values.annonceTitle,
             content:values.annonceContent||'',
             themeCode:this.state.themeCode,
-            loginName:username
+            loginName:this.state.username
         };
         postData(api+'/dhy/theme/updateTheme',data,(result)=>{
             showSuccess('修改成功');
@@ -177,7 +180,7 @@ class Announce extends React.Component {
     getData(){
         return {
             fileType:11,
-            loginName:username
+            loginName:this.state.username
         }
     }
 }

@@ -27,7 +27,7 @@ const tailFormItemLayout = {
     },
   },
 };
-const username=getCookie('loginName');
+
 class Graduation extends React.Component {
   constructor(props, context) {
       super(props, context);
@@ -146,16 +146,21 @@ class Graduation extends React.Component {
       </div>
     );
   }
+  componentWillMount(){
+    this.setState({
+      username:getCookie('loginName')
+    });
+  }
   getGraduationFrom(){
     return{
       fileType:8,
-      loginName:username
+      loginName:this.state.username
     };
   }
   getGraduationImage(){
     return{
       fileType:7,
-      loginName:username
+      loginName:this.state.username
     };
   }
   normFile(e) {

@@ -11,7 +11,7 @@ const styleUpload={
   marginTop:'20px'
 };
 
-const username=getCookie('loginName');
+
 const arrTypName=['application','record','open','graduation'];
 const arrTypeUrl=['/dhy/application/getApplicationInfo','/dhy/record/getRecordInfo','/dhy/open/getOpenInfo','/dhy/graduation/getGraduationInfo'];
 class UploadForms extends React.Component {
@@ -59,13 +59,13 @@ class UploadForms extends React.Component {
                   {
                     isGraduate==0&&
                     <div className="upload-wrapper" style={styleUpload}>
-                      <UploadBtn name="上传开班学员名单" getData={this.getStudentFormData} callback={this.handeFileOne.bind(this)}/>
+                      <UploadBtn name="上传开班学员名单" getData={this.getStudentFormData.bind(this)} callback={this.handeFileOne.bind(this)}/>
                     </div>
                   }
                   {
                     isGraduate==0&&
                     <div className="upload-wrapper" style={styleUpload}>
-                      <UploadBtn name="上传开班表" getData={this.getOpenData} callback={this.handeFileTwo.bind(this)}/>
+                      <UploadBtn name="上传开班表" getData={this.getOpenData.bind(this)} callback={this.handeFileTwo.bind(this)}/>
                       <Button type="primary" htmlType="submit" style={{marginTop:'20px'}} onClick={this.submitOpen.bind(this)}>提交</Button>
                     </div>
                   }
@@ -80,7 +80,7 @@ class UploadForms extends React.Component {
               {
                 type==3&&
                 <div className="upload-wrapper" style={styleUpload}>
-                  <UploadBtn name="上传文件" getData={this.getRecordData} callback={this.handeFileOne.bind(this)}/>
+                  <UploadBtn name="上传文件" getData={this.getRecordData.bind(this)} callback={this.handeFileOne.bind(this)}/>
                   <Button type="primary" htmlType="submit" style={{marginTop:'20px'}} onClick={this.handleReOpen.bind(this)}>重新开班</Button>
                 </div>
 
@@ -92,6 +92,9 @@ class UploadForms extends React.Component {
       if(getCookie('accountType')==1){
         hashHistory.push('/');
       }
+      this.setState({
+        username:getCookie('loginName')
+      });
     }
     componentDidMount(){
       const type=this.props.params.type;
@@ -143,19 +146,19 @@ class UploadForms extends React.Component {
     getRecordData(){
       return{
         fileType:2,
-        loginName:username
+        loginName:this.state.username
       };
     }
     getStudentFormData(){
       return{
         fileType:3,
-        loginName:username
+        loginName:this.state.username
       };
     }
     getOpenData(){
       return{
         fileType:4,
-        loginName:username
+        loginName:this.state.username
       };
     }
 
