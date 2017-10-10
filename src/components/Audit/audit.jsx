@@ -86,7 +86,7 @@ class Audit extends React.Component {
         type>0?hashHistory.push('/application/'+code+'/'+type):hashHistory.push('/application/'+item.id+'/'+type);
       }else{
         //isGraduate
-        type>0?hashHistory.push('/uploadForms/'+type+'?id='+code):hashHistory.push({
+        type>1?hashHistory.push('/uploadForms/'+type+'?id='+code):hashHistory.push({
           pathname:'/uploadForms/'+type,
           query:{
             isGraduate:item.isGraduate,

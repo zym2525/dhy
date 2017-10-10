@@ -47,7 +47,7 @@ class UploadForms extends React.Component {
                 )
               }
               {
-                type==0&&
+                (type==0||type==1)&&
                 <div>
                   {
                     isGraduate==1&&
@@ -186,7 +186,24 @@ class UploadForms extends React.Component {
       });
     }
     submitRecord(){
-
+      let {
+        fileOneId,
+        fileOneName
+        }=this.state;
+      if(!fileOneId){
+        alert('请上传备案表');
+        return;
+      }
+      let data={
+        projectName:this.props.location.query.projectName,
+        applicationCode:this.props.location.query.code,
+        supplyName:this.props.location.query.supplyName,
+        fileId:fileOneId,
+        fileName:fileOneName,
+      };
+      postData(api+'/dhy/record/saveRecord',data,(result)=>{
+        showSuccess('上传成功');
+      });
     }
     //上传结业表
     submitGraduation(values){
