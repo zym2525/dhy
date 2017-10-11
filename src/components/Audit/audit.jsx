@@ -1,7 +1,7 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import '../../static/css/commonList.less'
-import { Pagination,Tabs ,Select } from 'antd';
+import { Pagination,Tabs ,Select} from 'antd';
 import '../../static/css/commonList.less'
 import {getCookie} from  '../../util/cookie';
 import {api,getLocalTime} from '../../util/common';
@@ -60,7 +60,7 @@ class Audit extends React.Component {
                     {
                         this.state.applicationList.map((item,index)=>
                             <dd key={index}>
-                                <div className="new-left">{item.id}</div>
+                                <div className="new-left">{this.state.newsType<2?item.id:item.applicationCode}</div>
                                 <div className="new-mid" onClick={this.handeClick.bind(this,item[arrTypeCode[this.state.newsType]],item)}>{item.projectName}</div>
                                 <div className="new-right">{getLocalTime(item.createTime)}</div>
                                 <div className="proposer">{item.supplyName}</div>
@@ -113,7 +113,7 @@ class Audit extends React.Component {
       });
     }
     componentDidMount(){
-        this.getList();
+      this.getList();
     }
     tab(key){
       this.setState({

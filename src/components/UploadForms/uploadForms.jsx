@@ -78,12 +78,12 @@ class UploadForms extends React.Component {
                 </div>
               }
               {
-                type==3&&
+                type==3&&this.state.graduation.status==2?
                 <div className="upload-wrapper" style={styleUpload}>
                   <UploadBtn name="上传文件" getData={this.getRecordData.bind(this)} callback={this.handeFileOne.bind(this)}/>
                   <Button type="primary" htmlType="submit" style={{marginTop:'20px'}} onClick={this.handleReOpen.bind(this)}>重新开班</Button>
                 </div>
-
+                :<h1 style={{marginTop:'20px',fontSize:'20px'}}>审核中或审核不通过</h1>
               }
             </div>
         );
