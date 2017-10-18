@@ -173,4 +173,6 @@ class Login extends React.Component {
         this.props.handleLogin(isLogin,alias,accountType);
     }
 }
+
+
 export default Login

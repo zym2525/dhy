@@ -6,3 +6,17 @@ export function update (data) {
     data
   }
 }
+
+export function getUserName(username){
+  return {
+    type: actionTypes.userInfo_name,
+    username
+  }
+}
+
+export function getUserType(usertype){
+  return {
+    type: actionTypes.userInfo_type,
+    usertype
+  }
+}

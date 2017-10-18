@@ -8,7 +8,9 @@ import {getCookie} from  '../../util/cookie';
 import { hashHistory } from 'react-router';
 import {api} from '../../util/common';
 import { postData } from '../../fetch/postData';
-import { Pagination,Modal } from 'antd';
+import { Pagination,Modal,Table } from 'antd';
+import {financeConfig} from '../../config/finance'
+
 
 import {textFieldStyle} from '../../config/style.js'
 import './finance.less'
@@ -27,96 +29,7 @@ class Finance extends React.Component {
     render() {
         return (
             <div className="finance">
-                <ul className="finance-title">
-                    <li className="finance-big-cell">编号</li>
-                    <li className="finance-big-cell">项目名</li>
-                    <li className="finance-sm-cell time">发布时间</li>
-                    <li className="finance-sm-cell">状态</li>
-                </ul>
-                <div className="finance-content">
-                    {
-                        this.state.feeList.map((item,index)=>
-                            <div className="item-box" key={index}>
-                                <ul className="item-title has-bottom">
-                                    <li className="finance-big-cell">{item.id}</li>
-                                    <li className="finance-big-cell">{item.projectName}</li>
-                                    <li className="finance-sm-cell time">{getLocalTime(item.createTime)}</li>
-                                    <li className="finance-sm-cell">{item.status==0?'待审核':'已审核'}</li>
-                                </ul>
-                                <ul className="item-content has-bottom">
-                                    <li className="finance-big-cell">
-                                        <span>经费总额:</span>
-                                        <MuiThemeProvider>
-                                            <TextField
-                                                hintText="待设置*"
-                                                floatingLabelStyle={textFieldStyle.floatingLabelStyle}
-                                                inputStyle={textFieldStyle.inputStyle}
-                                                floatingLabelShrinkStyle={textFieldStyle.floatingLabelShrinkStyle}
-                                                style={textFieldStyle.style}
-                                                underlineShow={false}
-                                                value={item.incomeOne}
-                                                disabled={item.disabled}
-                                                onChange={this.handleInputChange.bind(this,index,'incomeOne')}
-                                                type="number"
-                                            />
-                                        </MuiThemeProvider>
-                                    </li>
-                                    <li className="finance-big-cell">
-                                        <span>剩余经费:</span>
-                                        <MuiThemeProvider>
-                                            <TextField
-                                                hintText="待设置*"
-                                                floatingLabelStyle={textFieldStyle.floatingLabelStyle}
-                                                inputStyle={textFieldStyle.inputStyle}
-                                                floatingLabelShrinkStyle={textFieldStyle.floatingLabelShrinkStyle}
-                                                style={textFieldStyle.style}
-                                                underlineShow={false}
-                                                value={item.incomeTwo}
-                                                disabled={item.disabled}
-                                                type="number"
-                                                onChange={this.handleInputChange.bind(this,index,'incomeTwo')}
-                                            />
-                                        </MuiThemeProvider>
-                                    </li>
-                                  {
-                                    item.status==0&&
-                                    <li className="finance-sm-cell">
-                                      <MuiThemeProvider>
-                                        <FlatButton
-                                          label="编辑"
-                                          style={{
-                                                    width:'auto',
-                                                     'border':'1px solid #333',
-                                                    'marginTop':'6px',
-                                                    'lineHeight':'34px'
-                                                }}
-                                          onClick={this.edit.bind(this,index)}
-                                        />
-                                      </MuiThemeProvider>
-                                    </li>
-                                  }
-                                  {
-                                    item.status==0&&
-                                    <li className="finance-sm-cell">
-                                      <MuiThemeProvider>
-                                        <FlatButton
-                                          label="保存"
-                                          style={{
-                                            width:'auto',
-                                             'border':'1px solid #333',
-                                            'marginTop':'6px',
-                                            'lineHeight':'34px'
-                                        }}
-                                        onClick={this.save.bind(this,index)}
-                                        />
-                                      </MuiThemeProvider>
-                                    </li>
-                                  }
-                                </ul>
-                            </div>
-                        )
-                    }
-                </div>
+              <Table {...financeConfig} dataSource={this.state.feeList} />
                 {
                     this.state.feeList.length>0
                         ?<div className="pagination-wrapper">
@@ -152,7 +65,10 @@ class Finance extends React.Component {
             pageSize:pageSize
         };
         postData(api+'/dhy/fee/list',data,(result)=>{
-            result.fees.map(x=>x.disabled=true);
+            result.fees.map((x,i)=>{
+              x.disabled=true;
+              x.key=i;
+            });
             this.setState({
                 feeList:result.fees,
                 total:result.total

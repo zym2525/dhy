@@ -93,4 +93,5 @@ class Manage extends React.Component {
         });
     }
 }
+
 export default Manage;
