@@ -85,14 +85,23 @@ class Audit extends React.Component {
       if(getCookie('accountType')==1){
         type>0?hashHistory.push('/application/'+code+'/'+type):hashHistory.push('/application/'+item.id+'/'+type);
       }else{
-        //isGraduate
-        type>1?hashHistory.push('/uploadForms/'+type+'?id='+code):hashHistory.push({
+        //isGraduate ('/uploadForms/'+type+'?id='+code
+        type>1?hashHistory.push({
+          pathname:'/uploadForms/'+type,
+          query:{
+            id:code,
+            status:item.status,
+            isGraduate:item.isGraduate,
+          },
+          state:item
+        }):hashHistory.push({
           pathname:'/uploadForms/'+type,
           query:{
             isGraduate:item.isGraduate,
             projectName:item.projectName,
             supplyName:item.supplyName,
-            code:item.applicationCode
+            code:item.applicationCode,
+            status:item.status
           },
           state:item
         });

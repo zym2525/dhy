@@ -22,7 +22,7 @@ class Finance extends React.Component {
         this.state={
             feeList:[],
             currentPage:0,
-            pageSize:4
+            pageSize:6
         };
     }
 

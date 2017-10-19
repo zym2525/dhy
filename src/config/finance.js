@@ -1,7 +1,7 @@
 import {getLocalTime} from '../util/common'
 export const columns = [
-  { title: '编号', dataIndex: 'applicationCode', key: 'applicationCode', fixed: 'left' },
-  { title: '培训项目名称', dataIndex: 'projectName', key: 'projectName',fixed: 'left'},
+  { title: '编号',width: 100, dataIndex: 'applicationCode', key: 'applicationCode', fixed: 'left' },
+  { title: '培训项目名称',width: 100, dataIndex: 'projectName', key: 'projectName' ,fixed: 'left'},
   { title: '分院', dataIndex: 'branch', key: 'branch' },
   { title: '分院结余', dataIndex: 'branchBalance', key: 'branchBalance' },
   { title: '成本支出', dataIndex: 'costPay', key: 'costPay' },

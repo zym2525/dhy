@@ -6,6 +6,7 @@ import { postData } from '../../fetch/postData';
 import UploadBtn from '../../components/UploadBtn/uploadBtn.jsx';
 import {Button} from 'antd';
 import Graduation from '../../components/Graduation/graduation.jsx';
+import Status from './subPage/status.jsx'
 
 const styleUpload={
   marginTop:'20px'
@@ -34,6 +35,8 @@ class UploadForms extends React.Component {
 
     render() {
         const type=this.props.params.type;
+        const statusN=this.props.location.query.status;
+        console.log(statusN)
         const isGraduate=this.props.location.query['isGraduate'];
         return (
             <div className="UploadForms">
@@ -56,6 +59,12 @@ class UploadForms extends React.Component {
                       <Button type="primary" htmlType="submit" style={{marginTop:'20px'}} onClick={this.submitRecord.bind(this)}>提交</Button>
                     </div>
                   }
+                  <Status status={statusN}/>
+                </div>
+              }
+              {
+                type==2&&
+                <div>
                   {
                     isGraduate==0&&
                     <div className="upload-wrapper" style={styleUpload}>
@@ -69,21 +78,26 @@ class UploadForms extends React.Component {
                       <Button type="primary" htmlType="submit" style={{marginTop:'20px'}} onClick={this.submitOpen.bind(this)}>提交</Button>
                     </div>
                   }
+                  <Status status={statusN}/>
                 </div>
               }
               {
-                type==2&&
-                <div style={{marginTop:'20px'}}>
-                  <Graduation values={this.state.graduation} callBackSubmit={this.submitGraduation.bind(this)}/>
+                type==3&&
+                  <div>
+                    {this.state.graduation.status==1&&
+                    <div className="upload-wrapper" style={styleUpload}>
+                      <UploadBtn name="上传文件" getData={this.getRecordData.bind(this)} callback={this.handeFileOne.bind(this)}/>
+                      <Button type="primary" htmlType="submit" style={{marginTop:'20px'}} onClick={this.handleReOpen.bind(this)}>重新开班</Button>
+                    </div>
+                    }
+                    {
+                      this.state.graduation.status==0&&
+                      <div style={{marginTop:'20px'}}>
+                        <Graduation values={this.state.graduation} callBackSubmit={this.submitGraduation.bind(this)}/>
+                      </div>
+                    }
+                    <Status status={this.state.graduation.status}/>
                 </div>
-              }
-              {
-                type==3&&this.state.graduation.status==2?
-                <div className="upload-wrapper" style={styleUpload}>
-                  <UploadBtn name="上传文件" getData={this.getRecordData.bind(this)} callback={this.handeFileOne.bind(this)}/>
-                  <Button type="primary" htmlType="submit" style={{marginTop:'20px'}} onClick={this.handleReOpen.bind(this)}>重新开班</Button>
-                </div>
-                :<h1 style={{marginTop:'20px',fontSize:'20px'}}>审核中或审核不通过</h1>
               }
             </div>
         );
