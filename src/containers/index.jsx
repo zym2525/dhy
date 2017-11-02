@@ -27,7 +27,7 @@ class App extends React.Component {
         <nav className="Logo">继续教育培训管理系统</nav>
         <div className="content clearfix">
             <Left/>
-            <div className="right">
+            <div className="right" id="print">
                 <div className="right-box" style={{padding:paddingStyle}}>
                     {
                         this.state.initDone

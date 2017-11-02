@@ -54,7 +54,7 @@ class Audit extends React.Component {
                         <div className="new-left">编号</div>
                         <div className="new-mid">项目名</div>
                         <div className="new-right">发布时间</div>
-                        <div className="proposer">申请人</div>
+                        <div className="proposer">学院</div>
                         <div className="status">状态</div>
                     </dt>
                     {
@@ -63,7 +63,7 @@ class Audit extends React.Component {
                                 <div className="new-left">{this.state.newsType<2?item.id:item.applicationCode}</div>
                                 <div className="new-mid" onClick={this.handeClick.bind(this,item[arrTypeCode[this.state.newsType]],item)}>{item.projectName}</div>
                                 <div className="new-right">{getLocalTime(item.createTime)}</div>
-                                <div className="proposer">{item.supplyName}</div>
+                                <div className="proposer">{item.schoolUnit}</div>
                                 <div className="status">{arrStatus[item.status]}</div>
                             </dd>
                         )

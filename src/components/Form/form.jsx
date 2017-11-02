@@ -5,6 +5,7 @@ import { hashHistory } from 'react-router';
 import { Form, Input, Tooltip, Upload,Button,Icon,Radio ,DatePicker,Modal } from 'antd';
 import {api,getLocalTime,showSuccess} from '../../util/common';
 import { postData } from '../../fetch/postData';
+import {Printpart} from '../../util/preview'
 import moment from 'moment';
 import './form.less';
 const { TextArea } = Input;
@@ -316,6 +317,7 @@ class UseForm extends React.Component {
                       </FormItem>
                   }
                 </Form>
+              <Button type="primary" onClick={this.handlePrint.bind(this)}>打印</Button>
             </div>
         )
     }
@@ -324,7 +326,9 @@ class UseForm extends React.Component {
             //hashHistory.push('/');
         }
     }
-
+    handlePrint(){
+      Printpart('print');
+    }
     handleSubmit(e){
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
