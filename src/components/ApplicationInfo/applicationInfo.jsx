@@ -55,8 +55,8 @@ class Application extends React.Component {
           {
             getCookie('accountType')==1&&this.state.applicationInfo.status==0&&
             <div style={{textAlign:'right'}}>
-              <Button style={{marginRight:'20px'}} type="primary" onClick={this.pass.bind(this)}>通过</Button>
-              <Button style={{marginRight:'10px'}} type="primary" onClick={this.noPass.bind(this)}>不通过</Button>
+              <Button style={{marginRight:'20px'}} type="primary" onClick={this.pass.bind(this,1)}>通过</Button>
+              <Button style={{marginRight:'10px'}} type="primary" onClick={this.pass.bind(this,2)}>不通过</Button>
             </div>
           }
           </div>
@@ -65,6 +65,7 @@ class Application extends React.Component {
   componentDidMount(){
     let id=this.props.params.id;
     let type=this.props.params.type;
+    console.log(type)
     let data=createData(type,id);
     postData(api+arrTypeUrl[type],data,(result)=> {
       let values = result[arrTypName[type]];
@@ -74,22 +75,20 @@ class Application extends React.Component {
       })
     });
   }
-  pass(){
+  pass(status){
     let id=this.props.params.id;
     let type=this.props.params.type;
     let data=createData(type,id);
-    data['status']=1;
+    data['status']=status;
     postData(api+arrTypeStatusUrl[type],data,(result)=> {
       showSuccess('更改成功');
-    });
-  }
-  noPass(){
-    let id=this.props.params.id;
-    let type=this.props.params.type;
-    let data=createData(type,id);
-    data['status']=2;
-    postData(api+arrTypeStatusUrl[type],data,(result)=> {
-      showSuccess('更改成功');
+      if(type==0&&status==1){
+        let dataOpen=this.state.applicationInfo;
+        dataOpen.applicationCode=result.applicationCode,
+        postData(api+'/dhy/open/saveOpen',dataOpen,(result)=> {
+
+        })
+      }
     });
   }
 }

@@ -17,14 +17,13 @@ class App extends React.Component {
     }
   }
   render(){
-    console.log(this.props.location.pathname)
     let paddingStyle='20px 30px 10px';
     if(this.props.location.pathname=='/Finance'){
       paddingStyle='20px 0 10px';
     }
     return(
       <div className="wapper">
-        <nav className="Logo">继续教育培训管理系统</nav>
+        <nav className="Logo"></nav>
         <div className="content clearfix">
             <Left/>
             <div className="right" id="print">
