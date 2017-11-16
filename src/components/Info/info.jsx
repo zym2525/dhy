@@ -25,6 +25,5 @@ class Info extends React.Component {
           </div>
         )
     }
-
 }
 export default Info

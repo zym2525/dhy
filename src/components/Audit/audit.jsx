@@ -32,6 +32,7 @@ class Audit extends React.Component {
     }
 
     render() {
+      let type=this.state.newsType;
         return (
             <div>
 
@@ -61,10 +62,10 @@ class Audit extends React.Component {
                         this.state.applicationList.map((item,index)=>
                             <dd key={index}>
                                 <div className="new-left">{this.state.newsType<2?item.id:item.applicationCode}</div>
-                                <div className="new-mid" onClick={this.handeClick.bind(this,item[arrTypeCode[this.state.newsType]],item)}>{item.projectName}</div>
+                                <div className="new-mid" onClick={this.handeClick.bind(this,item[arrTypeCode[this.state.newsType]],item,2)}>{item.projectName}</div>
                                 <div className="new-right">{getLocalTime(item.createTime)}</div>
-                                <div className="proposer">{item.schoolUnit}</div>
-                                <div className="status">{arrStatus[item.status]}</div>
+                                <div className="proposer">{item.alias}</div>
+                                <div className="status" onClick={this.handeClick.bind(this,item[arrTypeCode[this.state.newsType]],item)}  style={{color:'#08c',cursor:'pointer'}}>{arrStatus[item.status]}</div>
                             </dd>
                         )
                     }
@@ -80,10 +81,20 @@ class Audit extends React.Component {
             </div>
         )
     }
-    handeClick(code,item){
+
+    handeClick(code,item,go){
       let type=this.state.newsType;
       if(getCookie('accountType')==1){
-        type>0?hashHistory.push('/application/'+code+'/'+type):hashHistory.push('/application/'+item.id+'/'+type);
+        if(go==2&&type>0){
+          hashHistory.push({
+            pathname:'/application/'+item.id+'/'+9,
+            query:{
+              flag:item.flag
+            }
+          });
+        }else{
+          type>0?hashHistory.push('/application/'+code+'/'+type):hashHistory.push('/application/'+item.id+'/'+type);
+        }
       }else{
         //isGraduate ('/uploadForms/'+type+'?id='+code
         type>1?hashHistory.push({
@@ -92,6 +103,8 @@ class Audit extends React.Component {
             id:code,
             status:item.status,
             isGraduate:item.isGraduate,
+            projectName:item.projectName,
+            supplyName:item.supplyName
           },
           state:item
         }):hashHistory.push({

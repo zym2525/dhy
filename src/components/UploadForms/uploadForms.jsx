@@ -266,7 +266,8 @@ class UploadForms extends React.Component {
         fileOneId,
         fileOneName,
         fileTwoId,
-        fileTwoName
+        fileTwoName,
+        info
       }=this.state;
       if(!fileOneId&&!fileTwoId){
         alert('请上传开班学员名单和开班表');
@@ -283,13 +284,17 @@ class UploadForms extends React.Component {
 
       let data={
         projectName:this.props.location.query.projectName,
-        applicationCode:this.props.location.query.code,
         supplyName:this.props.location.query.supplyName,
         fileId:fileOneId,
         fileIdTwo:fileTwoId,
         fileName:fileOneName,
         fileNameTwo:fileTwoName
       };
+      if(info.flag==0){
+        data.applicationId=info.applicationId;
+      }else{
+        data.recordCode=info.recordCode;
+      }
       postData(api+'/dhy/open/saveOpen',data,(result)=>{
         showSuccess('上传成功');
       });

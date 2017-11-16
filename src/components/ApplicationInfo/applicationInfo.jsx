@@ -24,7 +24,7 @@ class Application extends React.Component {
         return (
           <div>
             {
-              this.props.params.type==0
+              (this.props.params.type==0||this.props.params.type==9)
               ?<Form values={this.state.applicationInfo} isPreview={true} />
               :
                 <div>
@@ -66,14 +66,33 @@ class Application extends React.Component {
     let id=this.props.params.id;
     let type=this.props.params.type;
     console.log(type)
-    let data=createData(type,id);
-    postData(api+arrTypeUrl[type],data,(result)=> {
-      let values = result[arrTypName[type]];
-      this.setState({
-        applicationInfo:values,
-        downloadId:values.id
-      })
-    });
+    if(type==9){
+      let flag=this.props.location.query.flag;
+      let data={
+        id:id
+      };
+      postData(api+'/dhy/open/getInfo',data,(result)=> {
+        if(flag==0){
+          var values = result.application;
+        }else{
+          var values = result.record;
+        }
+        this.setState({
+          applicationInfo:values,
+          downloadId:values.id
+        })
+      });
+    }else{
+      let data=createData(type,id);
+      postData(api+arrTypeUrl[type],data,(result)=> {
+        let values = result[arrTypName[type]];
+        this.setState({
+          applicationInfo:values,
+          downloadId:values.id
+        })
+      });
+    }
+
   }
   pass(status){
     let id=this.props.params.id;
@@ -82,12 +101,32 @@ class Application extends React.Component {
     data['status']=status;
     postData(api+arrTypeStatusUrl[type],data,(result)=> {
       showSuccess('更改成功');
+      //申请表
       if(type==0&&status==1){
         let dataOpen=this.state.applicationInfo;
-        dataOpen.applicationCode=result.applicationCode,
+        dataOpen.applicationId=id,
         postData(api+'/dhy/open/saveOpen',dataOpen,(result)=> {
 
         })
+      }
+      //备案表
+      if(type==1&&status==1){
+        let dataOpen=this.state.applicationInfo;
+        dataOpen.recordCode=id,
+          postData(api+'/dhy/open/saveOpen',dataOpen,(result)=> {
+
+          })
+      }
+      //开班表
+      if(type==2&&status==1){
+        let {projectName,supplyName}=this.state.applicationInfo;
+        let dataG={
+          projectName:projectName,
+          supplyName:supplyName,
+          applicationCode:result.applicationCode
+        };
+        postData(api+'/dhy/graduation/saveGraduation',data,(result)=>{
+        });
       }
     });
   }
