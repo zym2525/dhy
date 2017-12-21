@@ -85,7 +85,7 @@ class Audit extends React.Component {
     handeClick(code,item,go){
       let type=this.state.newsType;
       if(getCookie('accountType')==1){
-        if(go==2&&type>0){
+        if(go==2&&type==2){
           hashHistory.push({
             pathname:'/application/'+item.id+'/'+9,
             query:{

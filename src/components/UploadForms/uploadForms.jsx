@@ -224,7 +224,7 @@ class UploadForms extends React.Component {
     }
     //上传结业表
     submitGraduation(values){
-      let {info}=this.state;
+      let {graduation}=this.state;
       if(!values.uploadForms) return;
       if(!values.uploadImages) return;
       if(values.uploadForms.length!=2){
@@ -240,9 +240,9 @@ class UploadForms extends React.Component {
       let img1=values.uploadImages[0].response.data;
       let img2=values.uploadImages[1].response.data;
       let data={
-        applicationCode:info.applicationCode,
-        projectName:info.projectName,
-        supplyName:info.supplyName,
+        applicationCode:graduation.applicationCode,
+        projectName:graduation.projectName,
+        graduationCode:graduation.graduationCode,
         fileId:file1.id,
         fileIdTwo:file2.id,
         imgId:img1.id,
@@ -256,7 +256,7 @@ class UploadForms extends React.Component {
         schoolIncome:values.schoolIncome,
         costPay:values.costPay
       }
-      postData(api+'/dhy/graduation/saveGraduation',data,(result)=>{
+      postData(api+'/dhy/graduation/updateGraduation',data,(result)=>{
         showSuccess('上传成功');
       });
     }

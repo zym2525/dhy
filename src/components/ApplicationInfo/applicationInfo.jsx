@@ -104,7 +104,7 @@ class Application extends React.Component {
       //申请表
       if(type==0&&status==1){
         let dataOpen=this.state.applicationInfo;
-        dataOpen.applicationId=id,
+        dataOpen.applicationId=id;
         postData(api+'/dhy/open/saveOpen',dataOpen,(result)=> {
 
         })
@@ -112,7 +112,7 @@ class Application extends React.Component {
       //备案表
       if(type==1&&status==1){
         let dataOpen=this.state.applicationInfo;
-        dataOpen.recordCode=id,
+        dataOpen.recordCode=id;
           postData(api+'/dhy/open/saveOpen',dataOpen,(result)=> {
 
           })
@@ -125,7 +125,8 @@ class Application extends React.Component {
           supplyName:supplyName,
           applicationCode:result.applicationCode
         };
-        postData(api+'/dhy/graduation/saveGraduation',data,(result)=>{
+        console.log(dataG)
+        postData(api+'/dhy/graduation/saveGraduation',dataG,(result)=>{
         });
       }
     });
