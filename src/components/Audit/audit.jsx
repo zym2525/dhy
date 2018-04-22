@@ -27,7 +27,7 @@ class Audit extends React.Component {
             applicationList:[],
             total:0,
             newsType:'0',
-            nowYear:'2017'
+            nowYear:new Date().getFullYear()
         };
     }
 
@@ -43,7 +43,7 @@ class Audit extends React.Component {
                   <TabPane tab="结业表" key="3"/>
                 </Tabs>
               <div className="clearfix">
-                <Select className="fr" defaultValue="2017" style={{ width: 120 }} onChange={this.handleSelect.bind(this)}>
+                <Select className="fr" defaultValue={new Date().getFullYear()} style={{ width: 120 }} onChange={this.handleSelect.bind(this)}>
                   <Option value="2017">2017</Option>
                   <Option value="2018">2018</Option>
                   <Option value="2019">2019</Option>
